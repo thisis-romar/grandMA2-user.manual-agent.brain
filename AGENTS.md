@@ -62,3 +62,31 @@ Model resolution (`scripts/detect-ai-model.sh`) cascade:
 
 Provenance fields (version/session/entrypoint) come from the transcript + env.
 No setup needed inside Claude Code. Outside a session each field is simply omitted.
+
+Value resolution is shared via `scripts/lib/provenance.sh` (sets `PROV_MODEL`,
+`PROV_VERSION`, `PROV_SESSION`, `PROV_ENTRYPOINT`), so commits and PRs stay in lockstep.
+
+### Pull requests
+
+PRs are opened via tooling, not a git hook, so they need the same fields added by hand.
+**When you open a PR, run `sh scripts/pr-trailers.sh` and append its output to the end of
+the PR body** (after the summary, alongside the `🤖 Generated with Claude Code` footer). It
+emits the same four fields as the commit trailers, wrapped in a collapsed `<details>` block
+(the fields sit in a fenced code block so GitHub keeps them on separate lines):
+
+````
+<details>
+<summary>Provenance</summary>
+
+```
+Co-authored-by: Claude Opus 4.8 <noreply@anthropic.com>
+Generated-with: Claude Code 2.1.185
+Claude-Session: <session id>
+Claude-Entrypoint: remote
+```
+
+</details>
+````
+
+Friendly model name only; the raw model id is never emitted. Prints nothing outside a
+Claude Code session.
