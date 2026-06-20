@@ -4,7 +4,7 @@ import { z } from 'zod';
 import type { Note, VaultModel } from '../types.js';
 import { search } from '../retrieve.js';
 import { searchFts } from '../db.js';
-import { backlinks, neighbours, related } from '../graph.js';
+import { backlinks, neighbours, related, relations } from '../graph.js';
 import { writeNote } from '../memory.js';
 
 function text(obj: unknown) {
@@ -73,6 +73,24 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     },
     async ({ id, k }) =>
       text(related(model, id, k ?? 10).map((r) => ({ ...brief(r.note), score: r.score }))),
+  );
+
+  server.registerTool(
+    'relations',
+    {
+      description:
+        'Typed graph edges for a note from the manifest contract: parent/child section, ' +
+        'prev/next page, cross-refs. Optional kind filter (e.g. parent, sequence-next, cross-ref).',
+      inputSchema: { id: z.string(), kind: z.string().optional() },
+    },
+    async ({ id, kind }) =>
+      text(
+        relations(model, id, kind).map((r) => ({
+          kind: r.kind,
+          direction: r.direction,
+          ...brief(r.note),
+        })),
+      ),
   );
 
   server.registerTool(

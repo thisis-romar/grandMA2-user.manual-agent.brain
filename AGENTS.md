@@ -9,7 +9,8 @@ This repo is an MCP **knowledge server** over one or more Obsidian vaults. When 
 | 2 | Read the specific note the graph pointed you to |
 | 3 (last resort) | Scan directories / read many files without graph guidance |
 
-**Tools:** `search`, `get_note`, `neighbours`, `backlinks`, `related`, `write_note`, `list_vaults`.
+**Tools:** `search`, `get_note`, `neighbours`, `backlinks`, `related`, `relations`, `write_note`, `list_vaults`.
+(`relations` follows the manifest's typed edges — parent/child section, prev/next page, cross-refs — in both directions.)
 
 **Excluded paths:** never scan `node_modules`, `dist`, `.git`, a vault's `.brain/`.
 
@@ -36,16 +37,24 @@ Self-hosted fallback (no rate limits): `open-context7` (Apache 2.0, Docker, drop
 
 ---
 
-## Model attribution
+## Model attribution & provenance
 
-Commits get `Co-authored-by` auto-injected by `.husky/prepare-commit-msg`, which
-calls `scripts/detect-ai-model.sh`. Resolution cascade:
+`.husky/prepare-commit-msg` calls `scripts/commit-trailers.sh` to auto-append
+authoring trailers (skipped if a `Co-authored-by` already exists):
 
+```
+Co-authored-by: Claude Opus 4.8 <noreply@anthropic.com>
+Generated-with: Claude Code 2.1.183
+Claude-Session: <session id>
+Claude-Entrypoint: remote
+```
+
+Model resolution (`scripts/detect-ai-model.sh`) cascade:
 1. `$CLAUDE_MODEL` env var (explicit override)
 2. `git config user.ai-model` (manual pin — `scripts/set-ai-model.sh "Claude X"`)
-3. **Auto-detect** — reads the active model from the live Claude Code session
-   transcript (`$CLAUDE_CODE_SESSION_ID`), mapping e.g. `claude-opus-4-8` →
-   `Claude Opus 4.8`. Friendly name only; the raw model id is never committed.
+3. **Auto-detect** — active model from the live session transcript
+   (`$CLAUDE_CODE_SESSION_ID`), e.g. `claude-opus-4-8` → `Claude Opus 4.8`.
+   Friendly name only; the raw model id is never committed.
 
-No setup needed inside Claude Code — attribution is automatic. Outside a Claude
-Code session (plain dev shell) it falls back to the pin/env, or skips if neither.
+Provenance fields (version/session/entrypoint) come from the transcript + env.
+No setup needed inside Claude Code. Outside a session each field is simply omitted.

@@ -51,7 +51,11 @@ claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/va
 ## MCP tools
 
 `search(query,k?)` · `get_note(id)` · `neighbours(id,depth?)` · `backlinks(id)` ·
-`related(id,k?)` · `write_note(type,title,body,summary?,links?)` · `list_vaults()`
+`related(id,k?)` · `relations(id,kind?)` · `write_note(type,title,body,summary?,links?)` ·
+`list_vaults()`
+
+`relations` walks the manifest's typed edges (parent/child section, prev/next page,
+cross-refs) in both directions — distinct from `neighbours`, which follows inline wikilinks.
 
 See `AGENTS.md` for the agent tool-priority contract.
 

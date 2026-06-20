@@ -57,3 +57,40 @@ export function related(model: VaultModel, idOrPath: string, k = 10): Array<{ no
   }
   return scored.sort((a, b) => b.score - a.score).slice(0, k);
 }
+
+export interface TypedRelation {
+  kind: string;
+  direction: 'out' | 'in';
+  note: Note;
+}
+
+/**
+ * Typed relation edges for a note (from the manifest's `relations` contract):
+ * outgoing edges stored on the note plus incoming edges found by reverse scan.
+ * Optional `kind` filters to one relation kind (e.g. 'parent', 'sequence-next').
+ */
+export function relations(model: VaultModel, idOrPath: string, kind?: string): TypedRelation[] {
+  const n = resolve(model, idOrPath);
+  if (!n) return [];
+  const seen = new Set<string>();
+  const out: TypedRelation[] = [];
+  const push = (k: string, direction: 'out' | 'in', note: Note): void => {
+    const key = `${k}::${note.path}`;
+    if (seen.has(key)) return; // dedupe mutual edges; first (outgoing) wins
+    seen.add(key);
+    out.push({ kind: k, direction, note });
+  };
+  for (const r of n.relations) {
+    if (kind && r.kind !== kind) continue;
+    const t = model.byPath.get(r.to);
+    if (t) push(r.kind, 'out', t);
+  }
+  for (const other of model.notes) {
+    if (other.path === n.path) continue;
+    for (const r of other.relations) {
+      if (r.to !== n.path || (kind && r.kind !== kind)) continue;
+      push(r.kind, 'in', other);
+    }
+  }
+  return out;
+}

@@ -1,11 +1,12 @@
 #!/bin/sh
-# vault-brain prepare-commit-msg — automatic model attribution.
-# Detection cascade (see scripts/detect-ai-model.sh):
-#   CLAUDE_MODEL env > git config user.ai-model > live session transcript.
+# vault-brain prepare-commit-msg — automatic AI authoring attribution.
+# Appends model + provenance trailers (see scripts/commit-trailers.sh, which
+# builds on scripts/detect-ai-model.sh). Skips if a Co-authored-by already exists
+# (avoids duplication on amend/rebase).
 COMMIT_MSG_FILE=$1
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo .)
-MODEL=$(sh "$ROOT/scripts/detect-ai-model.sh" 2>/dev/null || true)
-if [ -n "$MODEL" ] && ! grep -qi "Co-authored-by:" "$COMMIT_MSG_FILE"; then
-  printf "\nCo-authored-by: %s <noreply@anthropic.com>\n" "$MODEL" >> "$COMMIT_MSG_FILE"
+if ! grep -qi "Co-authored-by:" "$COMMIT_MSG_FILE"; then
+  TRAILERS=$(sh "$ROOT/scripts/commit-trailers.sh" 2>/dev/null || true)
+  [ -n "$TRAILERS" ] && printf "\n%s\n" "$TRAILERS" >> "$COMMIT_MSG_FILE"
 fi
 exit 0
