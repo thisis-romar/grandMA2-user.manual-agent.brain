@@ -32,6 +32,29 @@ export function neighbours(model: VaultModel, idOrPath: string, depth = 1): Note
   return result.map((p) => model.byPath.get(p)!).filter(Boolean);
 }
 
+/**
+ * Ancestor notes via outgoing `parent` typed edges, ordered root -> immediate parent.
+ * Walks the manifest's parent relation (e.g. page -> section) so search hits can carry a
+ * breadcrumb without extra round-trips. Cycle-safe and depth-capped.
+ */
+export function ancestry(model: VaultModel, idOrPath: string, maxDepth = 6): Note[] {
+  const start = resolve(model, idOrPath);
+  if (!start) return [];
+  const chain: Note[] = [];
+  const seen = new Set<string>([start.path]);
+  let current: Note = start;
+  for (let d = 0; d < maxDepth; d++) {
+    const parentRel = current.relations.find((r) => r.kind === 'parent');
+    if (!parentRel) break;
+    const next = model.byPath.get(parentRel.to);
+    if (!next || seen.has(next.path)) break;
+    seen.add(next.path);
+    chain.unshift(next);
+    current = next;
+  }
+  return chain;
+}
+
 /** Notes that link to the given note. */
 export function backlinks(model: VaultModel, idOrPath: string): Note[] {
   const n = resolve(model, idOrPath);

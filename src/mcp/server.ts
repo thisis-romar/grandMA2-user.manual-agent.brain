@@ -1,10 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type Database from 'better-sqlite3';
 import { z } from 'zod';
-import type { Note, VaultModel } from '../types.js';
-import { search } from '../retrieve.js';
+import type { Note, SearchHit, VaultModel } from '../types.js';
+import { focusedSnippet, search } from '../retrieve.js';
 import { searchFts } from '../db.js';
-import { backlinks, neighbours, related, relations } from '../graph.js';
+import { ancestry, backlinks, neighbours, related, relations } from '../graph.js';
 import { writeNote } from '../memory.js';
 
 function text(obj: unknown) {
@@ -13,6 +13,16 @@ function text(obj: unknown) {
 
 function brief(n: Note) {
   return { id: n.id, path: n.path, type: n.type, title: n.title, summary: n.summary };
+}
+
+/** Add a breadcrumb (ancestor section titles) and a query-focused snippet to each hit. */
+function enrich(model: VaultModel, query: string, hits: SearchHit[]): SearchHit[] {
+  return hits.map((h) => {
+    const n = model.byId.get(h.id) ?? model.byPath.get(h.path);
+    const breadcrumb = n ? ancestry(model, n.path).map((a) => a.title) : [];
+    const snippet = (n && focusedSnippet(n.body, query)) || h.snippet;
+    return { ...h, snippet, ...(breadcrumb.length ? { breadcrumb } : {}) };
+  });
 }
 
 /** Build an MCP server exposing the brain's tools over a loaded vault model. */
@@ -31,7 +41,7 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
       const exclude = model.manifest.retrieval?.exclude_types ?? [];
       let hits = db ? searchFts(db, query, limit, exclude) : [];
       if (!hits.length) hits = search(model, query, limit);
-      return text(hits);
+      return text(enrich(model, query, hits));
     },
   );
 

@@ -43,4 +43,5 @@ export interface SearchHit {
   title: string;
   score: number;
   snippet: string;
+  breadcrumb?: string[]; // ancestor section titles (root -> immediate parent)
 }
