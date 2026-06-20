@@ -1,0 +1,19 @@
+spec_version: 1
+vault:
+  name: sample
+links: { style: wikilink, resolution: path-qualified, id_field: slug }
+taxonomy:
+  folders:
+    Sections/: section
+    Pages/: page
+    Keywords/: keyword
+  moc_glob: "000 *.md"
+frontmatter:
+  all: [type, slug]
+  by_type:
+    keyword: [keyword]
+relations:
+  section_ref: { from: page, to: section, kind: parent }
+retrieval:
+  summary_field: summary
+  exclude_types: [moc]
