@@ -1,7 +1,10 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { loadVault } from './vault.js';
 import { search } from './retrieve.js';
 import { buildServer } from './mcp/server.js';
+import { openDb, indexVault, searchFts } from './db.js';
 
 const USAGE = 'usage: brain <index|query|serve> <vault-root> [query...]';
 
@@ -11,11 +14,12 @@ async function main(): Promise<void> {
   if (cmd === 'index') {
     const root = rest[0] ?? '.';
     const model = await loadVault(root);
-    const edges = model.notes.reduce((a, n) => a + n.outlinks.length, 0);
-    const byType: Record<string, number> = {};
-    for (const n of model.notes) byType[n.type] = (byType[n.type] ?? 0) + 1;
-    console.log(`Indexed ${model.notes.length} notes, ${edges} links from ${root}`);
-    console.log('by type:', Object.entries(byType).map(([t, c]) => `${t}=${c}`).join('  '));
+    const db = openDb(root);
+    const stats = indexVault(model, db);
+    db.close();
+    console.log(
+      `Indexed ${stats.total} notes (${stats.updated} updated), ${stats.links} links from ${root}`,
+    );
     return;
   }
 
@@ -27,7 +31,16 @@ async function main(): Promise<void> {
       process.exit(2);
     }
     const model = await loadVault(root);
-    const hits = search(model, q);
+    const dbPath = path.join(root, '.brain', 'vault-brain.sqlite');
+    let hits;
+    if (existsSync(dbPath)) {
+      const db = openDb(root);
+      hits = searchFts(db, q, 10);
+      db.close();
+      if (!hits.length) hits = search(model, q);
+    } else {
+      hits = search(model, q);
+    }
     console.log(`\n${hits.length} result(s) for "${q}"\n`);
     for (const h of hits) console.log(`  [${h.score}] ${h.path}\n        ${h.snippet}`);
     return;
@@ -36,11 +49,12 @@ async function main(): Promise<void> {
   if (cmd === 'serve') {
     const root = rest[0] ?? '.';
     const model = await loadVault(root);
-    const server = buildServer(model);
+    const dbPath = path.join(root, '.brain', 'vault-brain.sqlite');
+    const db = existsSync(dbPath) ? openDb(root) : undefined;
+    const server = buildServer(model, db);
     await server.connect(new StdioServerTransport());
-    // stdout is the MCP channel; log to stderr.
     console.error(
-      `vault-brain serving "${model.manifest.vault.name}" (${model.notes.length} notes) over stdio`,
+      `vault-brain serving "${model.manifest.vault.name}" (${model.notes.length} notes, FTS: ${db ? 'on' : 'off'}) over stdio`,
     );
     return;
   }

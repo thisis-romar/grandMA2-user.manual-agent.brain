@@ -1,7 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import Database from 'better-sqlite3';
 import { z } from 'zod';
 import type { Note, VaultModel } from '../types.js';
 import { search } from '../retrieve.js';
+import { searchFts } from '../db.js';
 import { backlinks, neighbours, related } from '../graph.js';
 import { writeNote } from '../memory.js';
 
@@ -14,14 +16,19 @@ function brief(n: Note) {
 }
 
 /** Build an MCP server exposing the brain's tools over a loaded vault model. */
-export function buildServer(model: VaultModel): McpServer {
+export function buildServer(model: VaultModel, db?: Database.Database): McpServer {
   const server = new McpServer({ name: 'vault-brain', version: '0.1.0' });
 
   server.tool(
     'search',
-    'Keyword search across notes (title/summary/body). Prefer this over reading files.',
+    'Full-text search across notes (title/summary/body). Prefer this over reading files.',
     { query: z.string(), k: z.number().int().positive().max(50).optional() },
-    async ({ query, k }) => text(search(model, query, k ?? 10)),
+    async ({ query, k }) => {
+      const limit = k ?? 10;
+      let hits = db ? searchFts(db, query, limit) : [];
+      if (!hits.length) hits = search(model, query, limit);
+      return text(hits);
+    },
   );
 
   server.tool(
