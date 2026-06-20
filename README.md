@@ -11,20 +11,23 @@ per-vault `.brain/manifest.yaml`.
 First consumer: [`grandma2-manual-vault`](https://github.com/thisis-romar/grandma2-manual-vault),
 which ships a `.brain/manifest.yaml`.
 
-## Status — P0 (this scaffold)
+## Status — P0 + P1
 
 Working today, no external services required:
 
 - **Manifest** loader + validator (`src/manifest.ts`).
 - **Vault model**: frontmatter + `[[wikilink]]` graph + typed relations (`src/vault.ts`).
-- **Retrieval**: in-memory keyword search (`src/retrieve.ts`).
+- **Retrieval**: SQLite **FTS5** full-text search (BM25), with in-memory keyword
+  fallback when no index exists (`src/db.ts`, `src/retrieve.ts`).
+- **Index**: persistent SQLite at `<vault>/.brain/vault-brain.sqlite` with incremental
+  reindex by file hash (`src/db.ts`).
 - **Graph**: `neighbours` / `backlinks` / `related` (`src/graph.ts`).
 - **Memory**: validated note write-back (`src/memory.ts`).
-- **MCP server** over stdio exposing all tools (`src/mcp/server.ts`).
+- **MCP server** over stdio exposing all tools via `registerTool` (`src/mcp/server.ts`).
 - **CLI**: `index` / `query` / `serve` (`src/cli.ts`).
 
-Roadmap (next): **P1** SQLite + FTS5 index · **P2** embeddings + `sqlite-vec` hybrid
-retrieval · **P3** richer MCP surface · **P4** memory audit (git) · **P5** multi-vault.
+Roadmap (next): **P2** embeddings + `sqlite-vec` hybrid retrieval · **P3** richer MCP
+surface · **P4** memory audit (git) · **P5** multi-vault.
 
 ## Use
 
@@ -51,3 +54,14 @@ claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/va
 `related(id,k?)` · `write_note(type,title,body,summary?,links?)` · `list_vaults()`
 
 See `AGENTS.md` for the agent tool-priority contract.
+
+## Bundled MCP servers (`.mcp.json`)
+
+This repo ships a project-level `.mcp.json` for dev sessions:
+
+- **context7** — live, versioned library docs (`resolve-library-id`, `query-docs`).
+- **sequential-thinking** — structured multi-step reasoning (`sequentialthinking`).
+
+Both run via `npx` and need a one-time interactive approval (`claude`, then approve);
+`claude mcp list` shows their state. See `docs/context7-validation.md` for the validation run
+and rate-limit notes.

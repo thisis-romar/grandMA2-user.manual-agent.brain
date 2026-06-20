@@ -1,9 +1,11 @@
 #!/bin/sh
-# vault-brain prepare-commit-msg — dynamic model attribution
-# Reads CLAUDE_MODEL env var > git config user.ai-model > skips attribution
+# vault-brain prepare-commit-msg — automatic model attribution.
+# Detection cascade (see scripts/detect-ai-model.sh):
+#   CLAUDE_MODEL env > git config user.ai-model > live session transcript.
 COMMIT_MSG_FILE=$1
-MODEL="${CLAUDE_MODEL:-$(git config user.ai-model 2>/dev/null || true)}"
-if [ -n "$MODEL" ] && ! grep -q "Co-Authored-By:" "$COMMIT_MSG_FILE"; then
-  printf "\nCo-Authored-By: %s <noreply@anthropic.com>\n" "$MODEL" >> "$COMMIT_MSG_FILE"
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo .)
+MODEL=$(sh "$ROOT/scripts/detect-ai-model.sh" 2>/dev/null || true)
+if [ -n "$MODEL" ] && ! grep -qi "Co-authored-by:" "$COMMIT_MSG_FILE"; then
+  printf "\nCo-authored-by: %s <noreply@anthropic.com>\n" "$MODEL" >> "$COMMIT_MSG_FILE"
 fi
 exit 0

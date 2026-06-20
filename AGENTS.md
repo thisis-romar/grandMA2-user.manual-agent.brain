@@ -38,9 +38,14 @@ Self-hosted fallback (no rate limits): `open-context7` (Apache 2.0, Docker, drop
 
 ## Model attribution
 
-Commits get `Co-Authored-By` auto-injected by `.husky/prepare-commit-msg`.
-Set the model once per machine:
-```bash
-git config user.ai-model "Claude Sonnet 4.6"  # or whatever model is active
-```
-Or export `CLAUDE_MODEL` in your shell/Claude Code session env.
+Commits get `Co-authored-by` auto-injected by `.husky/prepare-commit-msg`, which
+calls `scripts/detect-ai-model.sh`. Resolution cascade:
+
+1. `$CLAUDE_MODEL` env var (explicit override)
+2. `git config user.ai-model` (manual pin — `scripts/set-ai-model.sh "Claude X"`)
+3. **Auto-detect** — reads the active model from the live Claude Code session
+   transcript (`$CLAUDE_CODE_SESSION_ID`), mapping e.g. `claude-opus-4-8` →
+   `Claude Opus 4.8`. Friendly name only; the raw model id is never committed.
+
+No setup needed inside Claude Code — attribution is automatic. Outside a Claude
+Code session (plain dev shell) it falls back to the pin/env, or skips if neither.

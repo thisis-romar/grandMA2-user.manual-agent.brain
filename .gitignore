@@ -4,3 +4,8 @@ dist/
 .DS_Store
 .brain/index.json
 .claude/settings.local.json
+
+# Generated vault index (SQLite + WAL/SHM) — written to <vault>/.brain/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

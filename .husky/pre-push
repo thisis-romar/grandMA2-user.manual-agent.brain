@@ -1,0 +1,4 @@
+#!/bin/sh
+# vault-brain pre-push — full test suite must pass before pushing.
+# (pre-commit stays fast: typecheck + lint-staged only.)
+npm test
