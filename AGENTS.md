@@ -9,9 +9,10 @@ This repo is an MCP **knowledge server** over one or more Obsidian vaults. When 
 | 2 | Read the specific note the graph pointed you to |
 | 3 (last resort) | Scan directories / read many files without graph guidance |
 
-**Tools:** `search`, `search_with_context`, `get_note`, `neighbours`, `backlinks`, `related`, `relations`, `list_facets`, `write_note`, `list_vaults`.
+**Tools:** `search`, `search_with_context`, `search_sections`, `get_note`, `neighbours`, `backlinks`, `related`, `relations`, `list_facets`, `write_note`, `list_vaults`.
 - `search(query,k?,type?)` returns hits with a breadcrumb (ancestor section titles) and a highlighted, query-focused snippet; `type` narrows to one note type.
 - `search_with_context` returns each hit plus its surrounding graph (parent, prev/next, cross-refs, related, backlinks) in one call — prefer it when you need context, to avoid follow-up `neighbours`/`relations` calls.
+- `search_sections(query,k?)` searches heading-level chunks (`chunk: by-heading`) and returns the most relevant section; `get_note(id#anchor)` fetches just that section (`get_note(id)` lists a note's section anchors). Prefer for precise lookups in long notes (tables, command syntax, one procedure).
 - `relations` follows the manifest's typed edges — parent/child section, prev/next page, cross-refs — in both directions.
 - `list_facets(field?)` lists note-type counts (and value counts for a frontmatter field) to drive the `type` filter.
 

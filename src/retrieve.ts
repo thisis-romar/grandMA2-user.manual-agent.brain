@@ -1,4 +1,5 @@
-import type { SearchHit, VaultModel } from './types.js';
+import type { SearchHit, SectionHit, VaultModel } from './types.js';
+import { chunkBody } from './chunk.js';
 
 const STOP = new Set([
   'the', 'a', 'an', 'to', 'of', 'in', 'and', 'or', 'is', 'for', 'on', 'with', 'as', 'by', 'at',
@@ -99,6 +100,49 @@ export function search(
     }
     if (score > 0) {
       hits.push({ id: n.id, path: n.path, title: n.title, score, snippet: n.summary || firstLine(n.body) });
+    }
+  }
+  return hits.sort((a, b) => b.score - a.score).slice(0, k);
+}
+
+/**
+ * In-memory section-level search (heading chunks). Fallback for when no SQLite
+ * index exists; mirrors db.searchSections so the MCP/CLI behave the same offline.
+ */
+export function searchSectionsInMemory(
+  model: VaultModel,
+  query: string,
+  k = 10,
+  includeTypes: string[] = [],
+): SectionHit[] {
+  const terms = [...new Set(tokenize(query))];
+  if (!terms.length) return [];
+  const exclude = new Set(model.manifest.retrieval?.exclude_types ?? []);
+  const include = includeTypes.length ? new Set(includeTypes) : undefined;
+  const hits: SectionHit[] = [];
+  for (const n of model.notes) {
+    if (exclude.has(n.type)) continue;
+    if (include && !include.has(n.type)) continue;
+    for (const c of chunkBody(n.id, n.body)) {
+      const heading = c.heading.toLowerCase();
+      const hay = `${heading}\n${c.body.toLowerCase()}`;
+      let score = 0;
+      for (const t of terms) {
+        if (heading.includes(t)) score += 5;
+        score += Math.min(countOcc(hay, t), 5);
+      }
+      if (score > 0) {
+        hits.push({
+          id: c.id,
+          noteId: n.id,
+          path: n.path,
+          noteTitle: n.title,
+          heading: c.heading,
+          anchor: c.anchor,
+          score,
+          snippet: focusedSnippet(c.body, query) ?? c.body.slice(0, 200),
+        });
+      }
     }
   }
   return hits.sort((a, b) => b.score - a.score).slice(0, k);

@@ -45,3 +45,15 @@ export interface SearchHit {
   snippet: string;
   breadcrumb?: string[]; // ancestor section titles (root -> immediate parent)
 }
+
+export interface SectionHit {
+  id: string; // chunk id: `${noteId}#${anchor}` (or the note id for a lead chunk)
+  noteId: string;
+  path: string;
+  noteTitle: string;
+  heading: string;
+  anchor: string;
+  score: number;
+  snippet: string;
+  breadcrumb?: string[];
+}

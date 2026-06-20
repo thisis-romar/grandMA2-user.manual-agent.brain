@@ -95,7 +95,7 @@ export async function writeNote(
       outlinks: input.links ?? [],
       relations: [],
     };
-    upsertNote(db, model.root, note);
+    upsertNote(db, model.root, note, model.manifest.retrieval?.chunk === 'by-heading');
   }
 
   return file;

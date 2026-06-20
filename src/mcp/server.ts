@@ -1,9 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type Database from 'better-sqlite3';
 import { z } from 'zod';
-import type { Note, SearchHit, VaultModel } from '../types.js';
-import { focusedSnippet, search } from '../retrieve.js';
-import { searchFts } from '../db.js';
+import type { Note, SearchHit, SectionHit, VaultModel } from '../types.js';
+import { focusedSnippet, search, searchSectionsInMemory } from '../retrieve.js';
+import { searchFts, searchSections } from '../db.js';
+import { chunkBody } from '../chunk.js';
 import { ancestry, backlinks, neighbours, related, relations } from '../graph.js';
 import { writeNote } from '../memory.js';
 
@@ -97,6 +98,29 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
   );
 
   server.registerTool(
+    'search_sections',
+    {
+      description:
+        'Section-level full-text search over heading chunks (`chunk: by-heading`). Returns the ' +
+        'most relevant section of a note with its heading, breadcrumb, and a focused snippet; ' +
+        'use the returned id with get_note for the full section. Prefer this for precise lookups ' +
+        'inside long notes (tables, command syntax, one procedure).',
+      inputSchema: { query: z.string(), k: z.number().int().positive().max(20).optional() },
+    },
+    async ({ query, k }) => {
+      const limit = k ?? 10;
+      const exclude = model.manifest.retrieval?.exclude_types ?? [];
+      let hits: SectionHit[] = db ? searchSections(db, query, limit, exclude) : [];
+      if (!hits.length) hits = searchSectionsInMemory(model, query, limit);
+      const out = hits.map((h) => {
+        const breadcrumb = ancestry(model, h.noteId).map((a) => a.title);
+        return { ...h, ...(breadcrumb.length ? { breadcrumb } : {}) };
+      });
+      return text(out);
+    },
+  );
+
+  server.registerTool(
     'list_facets',
     {
       description:
@@ -127,12 +151,29 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
   server.registerTool(
     'get_note',
     {
-      description: 'Fetch a single note (frontmatter + body) by id/slug or vault path.',
+      description:
+        'Fetch a single note (frontmatter + body) by id/slug or vault path. Append `#anchor` ' +
+        '(e.g. `key_x#usage`) to fetch just one heading section; the full note includes a ' +
+        '`sections` list of available anchors.',
       inputSchema: { id: z.string() },
     },
     async ({ id }) => {
-      const n = model.byId.get(id) ?? model.byPath.get(id);
-      return n ? text(n) : text({ error: 'not found', id });
+      const hash = id.indexOf('#');
+      const baseId = hash >= 0 ? id.slice(0, hash) : id;
+      const anchor = hash >= 0 ? id.slice(hash + 1) : '';
+      const n = model.byId.get(baseId) ?? model.byPath.get(baseId);
+      if (!n) return text({ error: 'not found', id });
+      const chunks = chunkBody(n.id, n.body);
+      if (anchor) {
+        const c = chunks.find((x) => x.anchor === anchor);
+        return c
+          ? text({ id: c.id, noteId: n.id, path: n.path, heading: c.heading, body: c.body })
+          : text({ error: 'anchor not found', id, anchors: chunks.map((x) => x.anchor).filter(Boolean) });
+      }
+      const sections = chunks
+        .filter((c) => c.anchor)
+        .map((c) => ({ anchor: c.anchor, heading: c.heading, level: c.level }));
+      return text({ ...n, sections });
     },
   );
 

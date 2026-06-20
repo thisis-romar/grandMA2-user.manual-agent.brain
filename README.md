@@ -17,10 +17,11 @@ Working today, no external services required:
 
 - **Manifest** loader + validator (`src/manifest.ts`).
 - **Vault model**: frontmatter + `[[wikilink]]` graph + typed relations (`src/vault.ts`).
-- **Retrieval**: SQLite **FTS5** full-text search (BM25), with in-memory keyword
-  fallback when no index exists (`src/db.ts`, `src/retrieve.ts`).
+- **Retrieval**: SQLite **FTS5** full-text search (BM25) at note **and section** level
+  (heading chunks, `chunk: by-heading`), with in-memory keyword fallback when no index
+  exists (`src/db.ts`, `src/retrieve.ts`, `src/chunk.ts`).
 - **Index**: persistent SQLite at `<vault>/.brain/vault-brain.sqlite` with incremental
-  reindex by file hash (`src/db.ts`).
+  reindex by file hash; notes + section chunks (`src/db.ts`).
 - **Graph**: `neighbours` / `backlinks` / `related` (`src/graph.ts`).
 - **Memory**: validated note write-back (`src/memory.ts`).
 - **MCP server** over stdio exposing all tools via `registerTool` (`src/mcp/server.ts`).
@@ -62,14 +63,18 @@ claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/va
 
 ## MCP tools
 
-`search(query,k?,type?)` · `search_with_context(query,k?,type?)` · `get_note(id)` ·
-`neighbours(id,depth?)` · `backlinks(id)` · `related(id,k?)` · `relations(id,kind?)` ·
-`list_facets(field?)` · `write_note(type,title,body,summary?,links?)` · `list_vaults()`
+`search(query,k?,type?)` · `search_with_context(query,k?,type?)` · `search_sections(query,k?)` ·
+`get_note(id)` · `neighbours(id,depth?)` · `backlinks(id)` · `related(id,k?)` ·
+`relations(id,kind?)` · `list_facets(field?)` · `write_note(type,title,body,summary?,links?)` ·
+`list_vaults()`
 
 `search` returns hits enriched with a **breadcrumb** (ancestor section titles) and a
 query-focused, highlighted **snippet**; `type` narrows to one note type (see `list_facets`).
 `search_with_context` adds each hit's surrounding graph (parent, prev/next, cross-refs,
 related, backlinks) in one call, to avoid follow-up `neighbours`/`relations` round-trips.
+`search_sections` searches **heading-level chunks** (the manifest's `chunk: by-heading`) and
+returns the most relevant section of a note; `get_note(id#anchor)` then fetches just that
+section (a plain `get_note(id)` lists the note's section anchors).
 `relations` walks the manifest's typed edges (parent/child section, prev/next page,
 cross-refs) in both directions — distinct from `neighbours`, which follows inline wikilinks.
 
