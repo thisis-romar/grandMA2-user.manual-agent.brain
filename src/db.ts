@@ -7,6 +7,7 @@ import type { Note, SearchHit, VaultModel } from './types.js';
 export interface IndexStats {
   total: number;
   updated: number;
+  removed: number;
   links: number;
 }
 
@@ -56,45 +57,69 @@ function fileHash(absPath: string): string {
   }
 }
 
+interface WriteStmts {
+  getNote: Database.Statement<[string], { file_hash: string | null }>;
+  upsertNote: Database.Statement;
+  deleteFts: Database.Statement;
+  insertFts: Database.Statement;
+  deleteLinks: Database.Statement;
+  insertLink: Database.Statement;
+}
+
+function writeStmts(db: Database.Database): WriteStmts {
+  return {
+    getNote: db.prepare<[string], { file_hash: string | null }>(
+      'SELECT file_hash FROM notes WHERE id = ?',
+    ),
+    upsertNote: db.prepare(`
+      INSERT INTO notes (id, path, title, type, summary, body, file_hash)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(id) DO UPDATE SET
+        path=excluded.path, title=excluded.title, type=excluded.type,
+        summary=excluded.summary, body=excluded.body, file_hash=excluded.file_hash
+    `),
+    deleteFts: db.prepare('DELETE FROM notes_fts WHERE id = ?'),
+    insertFts: db.prepare('INSERT INTO notes_fts (id, title, summary, body) VALUES (?, ?, ?, ?)'),
+    deleteLinks: db.prepare('DELETE FROM links WHERE source_id = ?'),
+    insertLink: db.prepare('INSERT OR IGNORE INTO links (source_id, target_id) VALUES (?, ?)'),
+  };
+}
+
+/** Write one note's row + FTS + links if its file hash changed. Returns true if written. */
+function writeOne(s: WriteStmts, vaultRoot: string, n: Note): boolean {
+  const hash = fileHash(path.join(vaultRoot, n.file));
+  const existing = s.getNote.get(n.id);
+  if (existing?.file_hash === hash) return false;
+  s.upsertNote.run(n.id, n.path, n.title, n.type, n.summary, n.body, hash);
+  s.deleteFts.run(n.id);
+  s.insertFts.run(n.id, n.title ?? '', n.summary ?? '', n.body ?? '');
+  s.deleteLinks.run(n.id);
+  for (const target of n.outlinks) s.insertLink.run(n.id, target);
+  return true;
+}
+
 /**
- * Upsert vault notes into SQLite with incremental re-index by file hash.
- * Only notes whose mtime/size changed (or new notes) are written.
+ * Upsert vault notes into SQLite with incremental re-index by file hash, and
+ * prune rows for notes that no longer exist in the vault.
  */
 export function indexVault(vault: VaultModel, db: Database.Database): IndexStats {
-  const getNote = db.prepare<[string], { file_hash: string | null }>(
-    'SELECT file_hash FROM notes WHERE id = ?',
-  );
-  const upsertNote = db.prepare(`
-    INSERT INTO notes (id, path, title, type, summary, body, file_hash)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-    ON CONFLICT(id) DO UPDATE SET
-      path=excluded.path, title=excluded.title, type=excluded.type,
-      summary=excluded.summary, body=excluded.body, file_hash=excluded.file_hash
-  `);
-  const deleteFts = db.prepare('DELETE FROM notes_fts WHERE id = ?');
-  const insertFts = db.prepare(
-    'INSERT INTO notes_fts (id, title, summary, body) VALUES (?, ?, ?, ?)',
-  );
-  const deleteLinks = db.prepare('DELETE FROM links WHERE source_id = ?');
-  const insertLink = db.prepare(
-    'INSERT OR IGNORE INTO links (source_id, target_id) VALUES (?, ?)',
-  );
-
+  const s = writeStmts(db);
+  const allIds = db.prepare<[], { id: string }>('SELECT id FROM notes');
   let updated = 0;
+  let removed = 0;
 
   const tx = db.transaction((notes: Note[]) => {
     for (const n of notes) {
-      const hash = fileHash(path.join(vault.root, n.file));
-      const existing = getNote.get(n.id);
-      if (existing?.file_hash !== hash) {
-        upsertNote.run(n.id, n.path, n.title, n.type, n.summary, n.body, hash);
-        deleteFts.run(n.id);
-        insertFts.run(n.id, n.title ?? '', n.summary ?? '', n.body ?? '');
-        deleteLinks.run(n.id);
-        for (const target of n.outlinks) {
-          insertLink.run(n.id, target);
-        }
-        updated++;
+      if (writeOne(s, vault.root, n)) updated++;
+    }
+    // prune: delete rows for ids no longer present in the vault
+    const present = new Set(notes.map((n) => n.id));
+    for (const { id } of allIds.all()) {
+      if (!present.has(id)) {
+        s.deleteFts.run(id);
+        s.deleteLinks.run(id);
+        db.prepare('DELETE FROM notes WHERE id = ?').run(id);
+        removed++;
       }
     }
   });
@@ -102,7 +127,13 @@ export function indexVault(vault: VaultModel, db: Database.Database): IndexStats
   tx(vault.notes);
 
   const totalLinks = vault.notes.reduce((acc, n) => acc + n.outlinks.length, 0);
-  return { total: vault.notes.length, updated, links: totalLinks };
+  return { total: vault.notes.length, updated, removed, links: totalLinks };
+}
+
+/** Upsert a single note into the index (used by memory write-back). */
+export function upsertNote(db: Database.Database, vaultRoot: string, note: Note): void {
+  const s = writeStmts(db);
+  db.transaction(() => writeOne(s, vaultRoot, note))();
 }
 
 function buildFtsQuery(raw: string): string {
@@ -112,21 +143,29 @@ function buildFtsQuery(raw: string): string {
 }
 
 /** Full-text search via FTS5 with BM25 ranking. Falls back to [] on parse errors. */
-export function searchFts(db: Database.Database, query: string, k: number): SearchHit[] {
+export function searchFts(
+  db: Database.Database,
+  query: string,
+  k: number,
+  excludeTypes: string[] = [],
+): SearchHit[] {
   const q = buildFtsQuery(query);
   if (!q) return [];
   try {
     type Row = { id: string; path: string; title: string; summary: string; rank: number };
+    const exFilter = excludeTypes.length
+      ? `AND n.type NOT IN (${excludeTypes.map(() => '?').join(', ')})`
+      : '';
     const rows = db
-      .prepare<[string, number], Row>(`
+      .prepare(`
         SELECT n.id, n.path, n.title, n.summary, bm25(notes_fts) AS rank
         FROM notes_fts
         JOIN notes n ON n.id = notes_fts.id
-        WHERE notes_fts MATCH ?
+        WHERE notes_fts MATCH ? ${exFilter}
         ORDER BY rank
         LIMIT ?
       `)
-      .all(q, k);
+      .all(q, ...excludeTypes, k) as Row[];
     return rows.map((r) => ({
       id: r.id,
       path: r.path,

@@ -18,7 +18,7 @@ async function main(): Promise<void> {
     const stats = indexVault(model, db);
     db.close();
     console.log(
-      `Indexed ${stats.total} notes (${stats.updated} updated), ${stats.links} links from ${root}`,
+      `Indexed ${stats.total} notes (${stats.updated} updated, ${stats.removed} removed), ${stats.links} links from ${root}`,
     );
     return;
   }
@@ -35,7 +35,7 @@ async function main(): Promise<void> {
     let hits;
     if (existsSync(dbPath)) {
       const db = openDb(root);
-      hits = searchFts(db, q, 10);
+      hits = searchFts(db, q, 10, model.manifest.retrieval?.exclude_types ?? []);
       db.close();
       if (!hits.length) hits = search(model, q);
     } else {

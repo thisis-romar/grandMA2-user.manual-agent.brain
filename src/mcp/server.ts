@@ -28,7 +28,8 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     },
     async ({ query, k }) => {
       const limit = k ?? 10;
-      let hits = db ? searchFts(db, query, limit) : [];
+      const exclude = model.manifest.retrieval?.exclude_types ?? [];
+      let hits = db ? searchFts(db, query, limit, exclude) : [];
       if (!hits.length) hits = search(model, query, limit);
       return text(hits);
     },
@@ -89,7 +90,7 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     },
     async (input) => {
       try {
-        return text({ written: await writeNote(model, input) });
+        return text({ written: await writeNote(model, input, db) });
       } catch (e) {
         return text({ error: (e as Error).message });
       }

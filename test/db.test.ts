@@ -57,3 +57,37 @@ test('link rows inserted for notes with outlinks', async () => {
   assert.equal(linkCount, vaultLinks);
   db.close();
 });
+
+test('reindex prunes notes removed from the vault', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  const dropped = vault.notes[0];
+  const count = (sql: string, p: string) =>
+    (db.prepare(sql).get(p) as { c: number }).c;
+
+  const stats = indexVault({ ...vault, notes: vault.notes.slice(1) }, db);
+  assert.equal(stats.removed, 1, 'one note should be pruned');
+  assert.equal(count('SELECT COUNT(*) c FROM notes WHERE id = ?', dropped.id), 0);
+  assert.equal(count('SELECT COUNT(*) c FROM notes_fts WHERE id = ?', dropped.id), 0);
+  assert.equal(count('SELECT COUNT(*) c FROM links WHERE source_id = ?', dropped.id), 0);
+  db.close();
+});
+
+test('searchFts honors exclude_types', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  const moc = vault.notes[0];
+  moc.type = 'moc';
+  indexVault(vault, db);
+  const q = moc.title;
+  assert.ok(
+    !searchFts(db, q, 10, ['moc']).some((h) => h.id === moc.id),
+    'moc-typed note must be excluded',
+  );
+  assert.ok(
+    searchFts(db, q, 10, []).some((h) => h.id === moc.id),
+    'moc-typed note present when nothing excluded',
+  );
+  db.close();
+});
