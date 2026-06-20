@@ -1,3 +1,4 @@
-# vault-brain pre-commit | authored by Claude Opus 4
+#!/bin/sh
+# vault-brain pre-commit
 npm run typecheck
 npx lint-staged
