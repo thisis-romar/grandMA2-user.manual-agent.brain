@@ -19,10 +19,13 @@ function brief(n: Note) {
 export function buildServer(model: VaultModel, db?: Database.Database): McpServer {
   const server = new McpServer({ name: 'vault-brain', version: '0.1.0' });
 
-  server.tool(
+  server.registerTool(
     'search',
-    'Full-text search across notes (title/summary/body). Prefer this over reading files.',
-    { query: z.string(), k: z.number().int().positive().max(50).optional() },
+    {
+      description:
+        'Full-text search across notes (title/summary/body). Prefer this over reading files.',
+      inputSchema: { query: z.string(), k: z.number().int().positive().max(50).optional() },
+    },
     async ({ query, k }) => {
       const limit = k ?? 10;
       let hits = db ? searchFts(db, query, limit) : [];
@@ -31,47 +34,58 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     },
   );
 
-  server.tool(
+  server.registerTool(
     'get_note',
-    'Fetch a single note (frontmatter + body) by id/slug or vault path.',
-    { id: z.string() },
+    {
+      description: 'Fetch a single note (frontmatter + body) by id/slug or vault path.',
+      inputSchema: { id: z.string() },
+    },
     async ({ id }) => {
       const n = model.byId.get(id) ?? model.byPath.get(id);
       return n ? text(n) : text({ error: 'not found', id });
     },
   );
 
-  server.tool(
+  server.registerTool(
     'neighbours',
-    'Notes linked from/to this note (graph traversal) up to depth.',
-    { id: z.string(), depth: z.number().int().positive().max(3).optional() },
+    {
+      description: 'Notes linked from/to this note (graph traversal) up to depth.',
+      inputSchema: { id: z.string(), depth: z.number().int().positive().max(3).optional() },
+    },
     async ({ id, depth }) => text(neighbours(model, id, depth ?? 1).map(brief)),
   );
 
-  server.tool(
+  server.registerTool(
     'backlinks',
-    'Notes that link to this note.',
-    { id: z.string() },
+    {
+      description: 'Notes that link to this note.',
+      inputSchema: { id: z.string() },
+    },
     async ({ id }) => text(backlinks(model, id).map(brief)),
   );
 
-  server.tool(
+  server.registerTool(
     'related',
-    'Notes most similar by shared link-neighbours (Jaccard).',
-    { id: z.string(), k: z.number().int().positive().max(50).optional() },
+    {
+      description: 'Notes most similar by shared link-neighbours (Jaccard).',
+      inputSchema: { id: z.string(), k: z.number().int().positive().max(50).optional() },
+    },
     async ({ id, k }) =>
       text(related(model, id, k ?? 10).map((r) => ({ ...brief(r.note), score: r.score }))),
   );
 
-  server.tool(
+  server.registerTool(
     'write_note',
-    'Append a new manifest-conformant note (agent memory write-back). Validated before write.',
     {
-      type: z.string(),
-      title: z.string(),
-      body: z.string(),
-      summary: z.string().optional(),
-      links: z.array(z.string()).optional(),
+      description:
+        'Append a new manifest-conformant note (agent memory write-back). Validated before write.',
+      inputSchema: {
+        type: z.string(),
+        title: z.string(),
+        body: z.string(),
+        summary: z.string().optional(),
+        links: z.array(z.string()).optional(),
+      },
     },
     async (input) => {
       try {
@@ -82,8 +96,11 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     },
   );
 
-  server.tool('list_vaults', 'List the vault(s) this brain serves.', {}, async () =>
-    text([{ name: model.manifest.vault.name, root: model.root, notes: model.notes.length }]),
+  server.registerTool(
+    'list_vaults',
+    { description: 'List the vault(s) this brain serves.', inputSchema: {} },
+    async () =>
+      text([{ name: model.manifest.vault.name, root: model.root, notes: model.notes.length }]),
   );
 
   return server;
