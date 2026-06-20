@@ -74,6 +74,19 @@ test('reindex prunes notes removed from the vault', async () => {
   db.close();
 });
 
+test('searchFts honors includeTypes (facet filter)', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  const hits = searchFts(db, 'preset', 20, [], ['section']);
+  assert.ok(hits.length > 0, 'expected at least one section hit for "preset"');
+  const byPath = new Map(vault.notes.map((n) => [n.path, n.type]));
+  for (const h of hits) {
+    assert.equal(byPath.get(h.path), 'section', `expected only section hits, got ${h.path}`);
+  }
+  db.close();
+});
+
 test('searchFts honors exclude_types', async () => {
   const db = freshDb();
   const vault = await loadVault(SAMPLE_VAULT);

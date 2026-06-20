@@ -5,12 +5,15 @@ This repo is an MCP **knowledge server** over one or more Obsidian vaults. When 
 
 | Priority | Action |
 |---|---|
-| 1 (first) | Call a brain MCP tool (`search`, `neighbours`, `get_note`) |
+| 1 (first) | Call a brain MCP tool (`search_with_context`, `search`, `neighbours`, `get_note`) |
 | 2 | Read the specific note the graph pointed you to |
 | 3 (last resort) | Scan directories / read many files without graph guidance |
 
-**Tools:** `search`, `get_note`, `neighbours`, `backlinks`, `related`, `relations`, `write_note`, `list_vaults`.
-(`relations` follows the manifest's typed edges — parent/child section, prev/next page, cross-refs — in both directions.)
+**Tools:** `search`, `search_with_context`, `get_note`, `neighbours`, `backlinks`, `related`, `relations`, `list_facets`, `write_note`, `list_vaults`.
+- `search(query,k?,type?)` returns hits with a breadcrumb (ancestor section titles) and a highlighted, query-focused snippet; `type` narrows to one note type.
+- `search_with_context` returns each hit plus its surrounding graph (parent, prev/next, cross-refs, related, backlinks) in one call — prefer it when you need context, to avoid follow-up `neighbours`/`relations` calls.
+- `relations` follows the manifest's typed edges — parent/child section, prev/next page, cross-refs — in both directions.
+- `list_facets(field?)` lists note-type counts (and value counts for a frontmatter field) to drive the `type` filter.
 
 **Excluded paths:** never scan `node_modules`, `dist`, `.git`, a vault's `.brain/`.
 

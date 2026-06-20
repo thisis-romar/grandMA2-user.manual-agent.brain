@@ -173,6 +173,7 @@ export function searchFts(
   query: string,
   k: number,
   excludeTypes: string[] = [],
+  includeTypes: string[] = [],
 ): SearchHit[] {
   const q = buildFtsQuery(query);
   if (!q) return [];
@@ -181,16 +182,19 @@ export function searchFts(
     const exFilter = excludeTypes.length
       ? `AND n.type NOT IN (${excludeTypes.map(() => '?').join(', ')})`
       : '';
+    const inFilter = includeTypes.length
+      ? `AND n.type IN (${includeTypes.map(() => '?').join(', ')})`
+      : '';
     const rows = db
       .prepare(`
         SELECT n.id, n.path, n.title, n.summary, bm25(notes_fts) AS rank
         FROM notes_fts
         JOIN notes n ON n.id = notes_fts.id
-        WHERE notes_fts MATCH ? ${exFilter}
+        WHERE notes_fts MATCH ? ${exFilter} ${inFilter}
         ORDER BY rank
         LIMIT ?
       `)
-      .all(q, ...excludeTypes, k) as Row[];
+      .all(q, ...excludeTypes, ...includeTypes, k) as Row[];
     return rows.map((r) => ({
       id: r.id,
       path: r.path,

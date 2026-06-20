@@ -15,6 +15,21 @@ function brief(n: Note) {
   return { id: n.id, path: n.path, type: n.type, title: n.title, summary: n.summary };
 }
 
+/** Run FTS (with in-memory fallback) honoring exclude_types + an optional type filter. */
+function runSearch(
+  model: VaultModel,
+  db: Database.Database | undefined,
+  query: string,
+  limit: number,
+  type?: string,
+): SearchHit[] {
+  const exclude = model.manifest.retrieval?.exclude_types ?? [];
+  const include = type ? [type] : [];
+  let hits = db ? searchFts(db, query, limit, exclude, include) : [];
+  if (!hits.length) hits = search(model, query, limit, include);
+  return hits;
+}
+
 /** Add a breadcrumb (ancestor section titles) and a query-focused snippet to each hit. */
 function enrich(model: VaultModel, query: string, hits: SearchHit[]): SearchHit[] {
   return hits.map((h) => {
@@ -33,15 +48,79 @@ export function buildServer(model: VaultModel, db?: Database.Database): McpServe
     'search',
     {
       description:
-        'Full-text search across notes (title/summary/body). Prefer this over reading files.',
-      inputSchema: { query: z.string(), k: z.number().int().positive().max(50).optional() },
+        'Full-text search across notes (title/summary/body). Prefer this over reading files. ' +
+        'Optional `type` narrows results to one note type (see list_facets).',
+      inputSchema: {
+        query: z.string(),
+        k: z.number().int().positive().max(50).optional(),
+        type: z.string().optional(),
+      },
     },
-    async ({ query, k }) => {
-      const limit = k ?? 10;
-      const exclude = model.manifest.retrieval?.exclude_types ?? [];
-      let hits = db ? searchFts(db, query, limit, exclude) : [];
-      if (!hits.length) hits = search(model, query, limit);
+    async ({ query, k, type }) => {
+      const hits = runSearch(model, db, query, k ?? 10, type);
       return text(enrich(model, query, hits));
+    },
+  );
+
+  server.registerTool(
+    'search_with_context',
+    {
+      description:
+        'Search plus one-call graph context: each hit returns its breadcrumb and surrounding ' +
+        'notes (parent section, prev/next page, cross-refs, related, backlinks). Prefer this ' +
+        'over search + follow-up neighbours/relations calls when you need context.',
+      inputSchema: {
+        query: z.string(),
+        k: z.number().int().positive().max(20).optional(),
+        type: z.string().optional(),
+      },
+    },
+    async ({ query, k, type }) => {
+      const hits = enrich(model, query, runSearch(model, db, query, k ?? 5, type));
+      const out = hits.map((h) => {
+        const rels = relations(model, h.id);
+        return {
+          ...h,
+          context: {
+            parent: rels.filter((r) => r.kind === 'parent').map((r) => brief(r.note)),
+            sequence: rels
+              .filter((r) => r.kind.startsWith('sequence-'))
+              .map((r) => ({ rel: r.kind, ...brief(r.note) })),
+            crossRefs: rels.filter((r) => r.kind === 'cross-ref').map((r) => brief(r.note)),
+            related: related(model, h.id, 3).map((r) => ({ ...brief(r.note), score: r.score })),
+            backlinks: backlinks(model, h.id).slice(0, 3).map(brief),
+          },
+        };
+      });
+      return text(out);
+    },
+  );
+
+  server.registerTool(
+    'list_facets',
+    {
+      description:
+        'List filterable facet values: note-type counts (always), plus value counts for a given ' +
+        'frontmatter field (e.g. keyword_type, depth, ma2_section). Use to drive the `type` filter.',
+      inputSchema: { field: z.string().optional() },
+    },
+    async ({ field }) => {
+      const typeCounts: Record<string, number> = {};
+      for (const n of model.notes) typeCounts[n.type] = (typeCounts[n.type] ?? 0) + 1;
+      const res: Record<string, unknown> = { type: typeCounts };
+      if (field) {
+        const counts: Record<string, number> = {};
+        for (const n of model.notes) {
+          const v = n.frontmatter[field];
+          for (const item of Array.isArray(v) ? v : [v]) {
+            if (item == null || item === '') continue;
+            const key = String(item);
+            counts[key] = (counts[key] ?? 0) + 1;
+          }
+        }
+        res[field] = counts;
+      }
+      return text(res);
     },
   );
 

@@ -62,10 +62,14 @@ claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/va
 
 ## MCP tools
 
-`search(query,k?)` · `get_note(id)` · `neighbours(id,depth?)` · `backlinks(id)` ·
-`related(id,k?)` · `relations(id,kind?)` · `write_note(type,title,body,summary?,links?)` ·
-`list_vaults()`
+`search(query,k?,type?)` · `search_with_context(query,k?,type?)` · `get_note(id)` ·
+`neighbours(id,depth?)` · `backlinks(id)` · `related(id,k?)` · `relations(id,kind?)` ·
+`list_facets(field?)` · `write_note(type,title,body,summary?,links?)` · `list_vaults()`
 
+`search` returns hits enriched with a **breadcrumb** (ancestor section titles) and a
+query-focused, highlighted **snippet**; `type` narrows to one note type (see `list_facets`).
+`search_with_context` adds each hit's surrounding graph (parent, prev/next, cross-refs,
+related, backlinks) in one call, to avoid follow-up `neighbours`/`relations` round-trips.
 `relations` walks the manifest's typed edges (parent/child section, prev/next page,
 cross-refs) in both directions — distinct from `neighbours`, which follows inline wikilinks.
 
