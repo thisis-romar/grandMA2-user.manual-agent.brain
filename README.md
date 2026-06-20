@@ -73,7 +73,9 @@ related, backlinks) in one call, to avoid follow-up `neighbours`/`relations` rou
 `relations` walks the manifest's typed edges (parent/child section, prev/next page,
 cross-refs) in both directions — distinct from `neighbours`, which follows inline wikilinks.
 
-See `AGENTS.md` for the agent tool-priority contract.
+See `AGENTS.md` for the agent tool-priority contract. Claude Code users also get a
+model-invoked skill at `.claude/skills/vault-brain-retrieval/` that teaches the same
+search → expand → cite workflow on demand.
 
 ## Bundled MCP servers (`.mcp.json`)
 
