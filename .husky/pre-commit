@@ -1,0 +1,3 @@
+# vault-brain pre-commit | authored by Claude Opus 4
+npm run typecheck
+npx lint-staged

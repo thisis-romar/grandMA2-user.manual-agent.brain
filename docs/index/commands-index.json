@@ -1,0 +1,2407 @@
+{
+  "keywords": [
+    {
+      "slug": "key_keyword_plus",
+      "title": "+ [Plus] keyword",
+      "summary": "+ [Plus] is a helping keyword with various functions.",
+      "path": "Keywords/+ [Plus] keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_minus",
+      "title": "- [Minus] keyword",
+      "summary": "[Minus] is a helping keyword with various functions.",
+      "path": "Keywords/- [Minus] keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_skipminus",
+      "title": "--- [GoFastBack] keyword",
+      "summary": "",
+      "path": "Keywords/--- [GoFastBack] keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_skipplus",
+      "title": "--- [GoFastForward] keyword",
+      "summary": "",
+      "path": "Keywords/--- [GoFastForward] keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_adduservar",
+      "title": "AddUserVar keyword",
+      "summary": "AddUserVar is a function used to change/extend content of user specific variables.",
+      "path": "Keywords/AddUserVar keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_addvar",
+      "title": "AddVar",
+      "summary": "AddVar is a function keyword to change or extend content of show specific variables.",
+      "path": "Keywords/AddVar.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_agenda",
+      "title": "Agenda",
+      "summary": "Agenda is an object type which holds scheduled tasks to be executed at specific dates and times.",
+      "path": "Keywords/Agenda.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_alert",
+      "title": "Alert keyword",
+      "summary": "Alert is a keyword which generates an alert message in the message center.",
+      "path": "Keywords/Alert keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_align",
+      "title": "Align keyword",
+      "summary": "Align is a function keyword to change the mode of the attribute encoders.",
+      "path": "Keywords/Align keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_alignfadermodules",
+      "title": "AlignFaderModules keyword",
+      "summary": "AlignFaderModules is a function used to configure connected external wings.",
+      "path": "Keywords/AlignFaderModules keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_all",
+      "title": "All",
+      "summary": "All is a function used to set the MAtricks property Single X to none (0), which means to reselect all fixtures, (or reselect all columns of fixtures, if Interleave is active).",
+      "path": "Keywords/All.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_allbuttonexecutors",
+      "title": "AllButtonExecutors keyword",
+      "summary": "AllButtonExecutors is an alias for all button executors.",
+      "path": "Keywords/AllButtonExecutors keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_allchaseexecutors",
+      "title": "AllChaseExecutors",
+      "summary": "AllChaseExecutors is used as an alias to address all executors with chasers assigned.",
+      "path": "Keywords/AllChaseExecutors.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_allfaderexecutors",
+      "title": "AllFaderExecutors",
+      "summary": "AllFaderExecutors is an alias for all fader executors.",
+      "path": "Keywords/AllFaderExecutors.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_allrows",
+      "title": "AllRows keyword",
+      "summary": "AllRows is a function used to set the MAtricks property Single Y to none (0), which means to reselect all rows of fixtures in a virtual array created with MAtricksInterleave.",
+      "path": "Keywords/AllRows keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_allsequexecutors",
+      "title": "AllSequExecutors",
+      "summary": "AllSequExecutors is an alias for all executors assigned with a sequence.",
+      "path": "Keywords/AllSequExecutors.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_and",
+      "title": "And keyword",
+      "summary": "The keyword And is a helping keyword that adds selection or values.",
+      "path": "Keywords/And keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_appearance",
+      "title": "Appearance keyword",
+      "summary": "You can change the frame color of pool objects and the background color of cues with the Appearance keyword.",
+      "path": "Keywords/Appearance keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_assign",
+      "title": "Assign keyword",
+      "summary": "Assign is a function used to define relationships between objects or give values to properties.",
+      "path": "Keywords/Assign keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_asterisk",
+      "title": "Asterisk -",
+      "summary": "The Asterisk \\\\ is a wildcard character to substitute for any other character or characters in a name.",
+      "path": "Keywords/Asterisk -.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_at_@",
+      "title": "At @ Character",
+      "summary": "The character @ functions as a place holder for user input in front or in the end of a macro line.",
+      "path": "Keywords/At @ Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_at",
+      "title": "At keyword",
+      "summary": "At may be used as a function to apply values or as a helping keyword for other functions to indicate destinations.",
+      "path": "Keywords/At keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_attribute",
+      "title": "Attribute keyword",
+      "summary": "Attribute is an object type used as reference attributes of a fixture.",
+      "path": "Keywords/Attribute keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_autocreate",
+      "title": "AutoCreate keyword",
+      "summary": "The keyword AutoCreate automatically creates preset objects.",
+      "path": "Keywords/AutoCreate keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_backup",
+      "title": "Backup",
+      "summary": "The Backup keyword opens and close the Backup menu.",
+      "path": "Keywords/Backup.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_black",
+      "title": "Black keyword",
+      "summary": "When the Black function is used with an Executor button the Black On command is executed when the button is pressed.",
+      "path": "Keywords/Black keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_blackscreen",
+      "title": "BlackScreen keyword",
+      "summary": "The keyword BlackScreen is used to make single or all screens of the console turn black.",
+      "path": "Keywords/BlackScreen keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_blackout",
+      "title": "Blackout keyword",
+      "summary": "Blackout is a function used to force zero values on output for dimmer parameter of channels and fixtures.",
+      "path": "Keywords/Blackout keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_blind",
+      "title": "Blind keyword",
+      "summary": "Blind is a toggle function.",
+      "path": "Keywords/Blind keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_blindedit",
+      "title": "BlindEdit keyword",
+      "summary": "BlindEdit is a toggle function.",
+      "path": "Keywords/BlindEdit keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_block",
+      "title": "Block keyword",
+      "summary": "Block is a function used to add data to prevent tracking.",
+      "path": "Keywords/Block keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_buttonpage",
+      "title": "ButtonPage keyword",
+      "summary": "ButtonPage is an object type representing the button executor part of a page.",
+      "path": "Keywords/ButtonPage keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_call",
+      "title": "Call keyword",
+      "summary": "",
+      "path": "Keywords/Call keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_camera",
+      "title": "Camera keyword",
+      "summary": "The keyword Camera is an object keyword.",
+      "path": "Keywords/Camera keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_changedest",
+      "title": "ChangeDest keyword",
+      "summary": "ChangeDest is a function used to change the destination of your command line.",
+      "path": "Keywords/ChangeDest keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_channel",
+      "title": "Channel keyword",
+      "summary": "Channel is an object type used to access fixtures with a Channel ID.",
+      "path": "Keywords/Channel keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_channelfader",
+      "title": "ChannelFader keyword",
+      "summary": "ChannelFader is an object type representing a fader of the ChannelPages.",
+      "path": "Keywords/ChannelFader keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_channellink",
+      "title": "ChannelLink keyword",
+      "summary": "ChannelLink is a function used to toggle the Channel faders to dynamic mode.",
+      "path": "Keywords/ChannelLink keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_channelpage",
+      "title": "ChannelPage keyword",
+      "summary": "ChannelPage is an object type representing a page of channel faders.",
+      "path": "Keywords/ChannelPage keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_chat",
+      "title": "Chat keyword",
+      "summary": "The keyword Chat generates an information message in the message center.",
+      "path": "Keywords/Chat keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_circularcopy",
+      "title": "CircularCopy keyword",
+      "summary": "CircularCopy is a function used to move attribute values within your current selection.",
+      "path": "Keywords/CircularCopy keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_clear",
+      "title": "Clear keyword",
+      "summary": "Clear is a function used to clear selection, active values or programmer.",
+      "path": "Keywords/Clear keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_clearactive",
+      "title": "ClearActive keyword",
+      "summary": "ClearActive is a function used to inactivate all values in programmer.",
+      "path": "Keywords/ClearActive keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_clearall",
+      "title": "ClearAll keyword",
+      "summary": "ClearAll is a function used to empty the entire programmer.",
+      "path": "Keywords/ClearAll keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_clearselection",
+      "title": "ClearSelection keyword",
+      "summary": "ClearSelection is a function used to deselect any selected fixtures.",
+      "path": "Keywords/ClearSelection keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_clone",
+      "title": "Clone keyword",
+      "summary": "It is possible to clone from fixture to fixture; from fixture to fixture type; from fixture type to fixture; or from fixture type to fixture type.",
+      "path": "Keywords/Clone keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_cmddelay",
+      "title": "CmdDelay keyword",
+      "summary": "CmdDelay is a helping keyword used to indicate delay times for the cmd link.",
+      "path": "Keywords/CmdDelay keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_cmdhelp",
+      "title": "CmdHelp keyword",
+      "summary": "CmdHelp is a function used to list all keywords in the response window of the command line.",
+      "path": "Keywords/CmdHelp keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_copy",
+      "title": "Copy keyword",
+      "summary": "Copy is a function used to create copies of an object.",
+      "path": "Keywords/Copy keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crashlogcopy",
+      "title": "CrashLogCopy keyword",
+      "summary": "CrashLogCopy is a function used to copy crash log files from the internal drive to USB flash drive.",
+      "path": "Keywords/CrashLogCopy keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crashlogdelete",
+      "title": "CrashLogDelete keyword",
+      "summary": "CrashLogDelete is a function used to delete crash log files on the internal drive.",
+      "path": "Keywords/CrashLogDelete keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crashloglist",
+      "title": "CrashLogList keyword",
+      "summary": "CrashLogList is a function used to list existing crash log files in command line response window.",
+      "path": "Keywords/CrashLogList keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crossfade",
+      "title": "Crossfade keyword",
+      "summary": "Crossfade is a function that is assigned for executors.",
+      "path": "Keywords/Crossfade keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crossfadea",
+      "title": "CrossfadeA keyword",
+      "summary": "CrossfadeA is a function assigned for executors.",
+      "path": "Keywords/CrossfadeA keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_crossfadeb",
+      "title": "CrossfadeB keyword",
+      "summary": "CrossfadeB is a function that is assigned for executors.",
+      "path": "Keywords/CrossfadeB keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_cue",
+      "title": "Cue keyword",
+      "summary": "Cue is an object type holding a look on stage.",
+      "path": "Keywords/Cue keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_cut",
+      "title": "Cut keyword",
+      "summary": "Cut is a function used to specify the source objects for a two-step move action.",
+      "path": "Keywords/Cut keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_defgoback",
+      "title": "DefGoBack keyword",
+      "summary": "DefGoBack is a keyword which refers to the selected executor.",
+      "path": "Keywords/DefGoBack keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_defgoforward",
+      "title": "DefGoForward keyword",
+      "summary": "DefGoForward is a keyword which refers to the selected sequence.",
+      "path": "Keywords/DefGoForward keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_defgopause",
+      "title": "DefGoPause keyword",
+      "summary": "DefGoPause is a keyword which refers to the selected executor.",
+      "path": "Keywords/DefGoPause keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_default",
+      "title": "Default",
+      "summary": "The Default keyword sets the given attributes for the fixture or channel selection to default values.",
+      "path": "Keywords/Default.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_delay",
+      "title": "Delay keyword",
+      "summary": "Delay is a helping keyword used to indicate delay times.",
+      "path": "Keywords/Delay keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_delete",
+      "title": "Delete keyword",
+      "summary": "Delete is a function used to remove data from the show file.",
+      "path": "Keywords/Delete keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_deleteshow",
+      "title": "DeleteShow keyword",
+      "summary": "DeleteShow is a function used to remove show files from hard drives.",
+      "path": "Keywords/DeleteShow keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_disconnectstation",
+      "title": "DisconnectStation keyword",
+      "summary": "DisconnectStation is a function used to throw stations out of your session.",
+      "path": "Keywords/DisconnectStation keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_dmx",
+      "title": "Dmx keyword",
+      "summary": "Dmx is an object type representing the DMX outputs of the console.",
+      "path": "Keywords/Dmx keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_dmxuniverse",
+      "title": "DmxUniverse keyword",
+      "summary": "DmxUniverse is an object type representing the DMX universes of the console.",
+      "path": "Keywords/DmxUniverse keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_dollar",
+      "title": "Dollar $ Character",
+      "summary": "The $ character indicates variables in the command line.",
+      "path": "Keywords/Dollar $ Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_dot",
+      "title": "Dot . Character",
+      "summary": "The .",
+      "path": "Keywords/Dot . Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_doublerate",
+      "title": "DoubleRate keyword",
+      "summary": "DoubleRate is a function used to double the current rate.",
+      "path": "Keywords/DoubleRate keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_doublespeed",
+      "title": "DoubleSpeed",
+      "summary": "DoubleSpeed is a function to multiply the speed or the executor by 2.",
+      "path": "Keywords/DoubleSpeed.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_down",
+      "title": "Down keyword",
+      "summary": "The keyword Down scrolls down one page in the window you are currently in.",
+      "path": "Keywords/Down keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_dropcontrol",
+      "title": "DropControl keyword",
+      "summary": "DropControl is used if multiple users are in a session.",
+      "path": "Keywords/DropControl keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_edit",
+      "title": "Edit keyword",
+      "summary": "Edit is a function keyword and it is used to modify values.",
+      "path": "Keywords/Edit keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effect",
+      "title": "Effect keyword",
+      "summary": "The keyword Effect is an object keyword.",
+      "path": "Keywords/Effect keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectattack",
+      "title": "EffectAttack",
+      "summary": "EffectAttack is a helping keyword used to indicate individual EffectAttack of a pulse width modulation form.",
+      "path": "Keywords/EffectAttack.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectbpm",
+      "title": "EffectBPM",
+      "summary": "EffectBPM is a helping keyword to indicate individual effect speed in BPM (= beats per minute).",
+      "path": "Keywords/EffectBPM.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectdecay",
+      "title": "EffectDecay",
+      "summary": "EffectDecay is a helping keyword to indicate individual EffectDecay of a pulse width modulation form.",
+      "path": "Keywords/EffectDecay.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectdelay",
+      "title": "EffectDelay",
+      "summary": "EffectDelay is a helping keyword to indicate individual effect delay times.",
+      "path": "Keywords/EffectDelay.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectfade",
+      "title": "EffectFade",
+      "summary": "EffectFade is a helping keyword to indicate individual effect fade times.",
+      "path": "Keywords/EffectFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectform",
+      "title": "EffectForm",
+      "summary": "EffectForm is a helping keyword to indicate individual effect form values.",
+      "path": "Keywords/EffectForm.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effecthz",
+      "title": "EffectHZ",
+      "summary": "EffectHZ is a helping keyword to indicate individual effect speed in Hertz.",
+      "path": "Keywords/EffectHZ.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effecthigh",
+      "title": "EffectHigh",
+      "summary": "EffectHigh is a helping keyword to indicate individual effect high values.",
+      "path": "Keywords/EffectHigh.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectid",
+      "title": "EffectID",
+      "summary": "EffectID is a helping keyword to indicate the EffectID layer.",
+      "path": "Keywords/EffectID.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectlow",
+      "title": "EffectLow",
+      "summary": "EffectLow is a helping keyword used to indicate individual effect low values.",
+      "path": "Keywords/EffectLow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectphase",
+      "title": "EffectPhase",
+      "summary": "EffectPhase is a helping keyword to indicate individual effect phases.",
+      "path": "Keywords/EffectPhase.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectsec",
+      "title": "EffectSec",
+      "summary": "EffectSec is a helping keyword to indicate individual effect speed in seconds.",
+      "path": "Keywords/EffectSec.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectspeedgroup",
+      "title": "EffectSpeedGroup keyword",
+      "summary": "EffectSpeedGroup calls the effect layer Speed Group.",
+      "path": "Keywords/EffectSpeedGroup keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_effectwidth",
+      "title": "EffectWidth",
+      "summary": "EffectWidth is a helping keyword to indicate individual EffectWidth.",
+      "path": "Keywords/EffectWidth.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_empty",
+      "title": "Empty",
+      "summary": "With the Empty keyword, you can assign the function empty to executors.",
+      "path": "Keywords/Empty.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_endif",
+      "title": "EndIf",
+      "summary": "EndIf is a helping keyword to indicate the end of an If statement.",
+      "path": "Keywords/EndIf.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_endsession",
+      "title": "EndSession",
+      "summary": "EndSession is a function keyword to end a session for all session members.",
+      "path": "Keywords/EndSession.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_escape",
+      "title": "Escape keyword",
+      "summary": "The keyword Escape closes modal dialogs within a macro.",
+      "path": "Keywords/Escape keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_execbutton1",
+      "title": "ExecButton1",
+      "summary": "ExecButton1 is an object keyword for the first button of an executor.",
+      "path": "Keywords/ExecButton1.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_execbutton2",
+      "title": "ExecButton2",
+      "summary": "ExecButton2 is an object keyword for the second button of an executor.",
+      "path": "Keywords/ExecButton2.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_execbutton3",
+      "title": "ExecButton3",
+      "summary": "ExecButton3 is an object keyword for the third button of an executor.",
+      "path": "Keywords/ExecButton3.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_executor",
+      "title": "Executor",
+      "summary": "Executor is an object keyword acting as a control handle for other objects.",
+      "path": "Keywords/Executor.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_exit",
+      "title": "Exit keyword",
+      "summary": "Exit disconnects the connection to Telnet.",
+      "path": "Keywords/Exit keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_export",
+      "title": "Export",
+      "summary": "Export is a function keyword to transfer data from the show file to the libraries in the console.",
+      "path": "Keywords/Export.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_extract",
+      "title": "Extract",
+      "summary": "Extract is a function that applies hard values in the programmer and breaks any referenced links.",
+      "path": "Keywords/Extract.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fade",
+      "title": "Fade",
+      "summary": "Fade is a helping keyword to indicate fade times.",
+      "path": "Keywords/Fade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fadepath",
+      "title": "FadePath",
+      "summary": "FadePath is an object type representing the possible transition paths of a cue part.",
+      "path": "Keywords/FadePath.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fader",
+      "title": "Fader",
+      "summary": "Fader is an object keyword representing the fader of an executor.",
+      "path": "Keywords/Fader.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_faderpage",
+      "title": "FaderPage",
+      "summary": "FaderPage is an object keyword representing the fader executor part of a page.",
+      "path": "Keywords/FaderPage.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_feature",
+      "title": "Feature",
+      "summary": "Feature is an object keyword representing features of a fixture.",
+      "path": "Keywords/Feature.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_filter",
+      "title": "Filter",
+      "summary": "Filter is an object keyword representing attribute filter and layer filter from the filter pool.",
+      "path": "Keywords/Filter.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fix",
+      "title": "Fix",
+      "summary": "Fix is a function keyword to fix objects on a page.",
+      "path": "Keywords/Fix.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fixture",
+      "title": "Fixture",
+      "summary": "Fixture is an object keyword to access fixtures with a fixture ID.",
+      "path": "Keywords/Fixture.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fixturetype",
+      "title": "FixtureType",
+      "summary": "FixtureType is an object keyword for the fixture types in the show file.",
+      "path": "Keywords/FixtureType.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_flash",
+      "title": "Flash",
+      "summary": "Flash is a function used to temporary overwrite master level to full on executing objects without using times.",
+      "path": "Keywords/Flash.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_flashgo",
+      "title": "FlashGo keyword",
+      "summary": "FlashGo executes the keyword Flash and jumps into the next cue.",
+      "path": "Keywords/FlashGo keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_flashon",
+      "title": "FlashOn keyword",
+      "summary": "FlashOn activates the cue and ignores the fade times and the master level.",
+      "path": "Keywords/FlashOn keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_flip",
+      "title": "Flip",
+      "summary": "Flip is a function keyword to access the different pan/tilt combinations that points a moving head in the same direction.",
+      "path": "Keywords/Flip.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_form",
+      "title": "Form",
+      "summary": "Form is an object type with shapes used for dynamic effects.",
+      "path": "Keywords/Form.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_freeze",
+      "title": "Freeze",
+      "summary": "If Freeze is on, programmer values have a higher priority as playbacks.",
+      "path": "Keywords/Freeze.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_full",
+      "title": "Full",
+      "summary": "Full is an function keyword to set the dimmer values to 100 %.",
+      "path": "Keywords/Full.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_fullhighlight",
+      "title": "FullHighlight keyword",
+      "summary": "Fullhighlight takes all highlight values of the fixtures that are currently selected into the programmer.",
+      "path": "Keywords/FullHighlight keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_gel",
+      "title": "Gel keyword",
+      "summary": "The keyword gel provides the opportunity to edit or apply swatch book colors via command line.",
+      "path": "Keywords/Gel keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_go",
+      "title": "Go",
+      "summary": "Go is a function keyword to activate the next step of an executing object.",
+      "path": "Keywords/Go.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_goback",
+      "title": "GoBack",
+      "summary": "GoBack is a function keyword to activate previous step of an executing object.",
+      "path": "Keywords/GoBack.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_goto",
+      "title": "Goto",
+      "summary": "Goto is a function keyword to jump in a list.",
+      "path": "Keywords/Goto.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_group",
+      "title": "Group",
+      "summary": "Group is an object type that contains a collection of fixtures and a selection sequence.",
+      "path": "Keywords/Group.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_halfrate",
+      "title": "HalfRate",
+      "summary": "HalfRate is a function keyword to divide the current rate by 2.",
+      "path": "Keywords/HalfRate.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_halfspeed",
+      "title": "HalfSpeed",
+      "summary": "HalfSpeed is a function keyword to divide the current speed by 2.",
+      "path": "Keywords/HalfSpeed.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_help",
+      "title": "Help",
+      "summary": "Help is a function keyword to open the help window.",
+      "path": "Keywords/Help.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_highlight",
+      "title": "Highlight",
+      "summary": "Highlight is a function to apply the defined highlight values on selected fixtures.",
+      "path": "Keywords/Highlight.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_identifyfadermodule",
+      "title": "IdentifyFaderModule keyword",
+      "summary": "IdentifyFaderModule defines which module corresponds to which wing.",
+      "path": "Keywords/IdentifyFaderModule keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_if",
+      "title": "If",
+      "summary": "The If keyword as a function keyword deselects fixtures not in the entered selection list.",
+      "path": "Keywords/If.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_ifactive",
+      "title": "IfActive",
+      "summary": "IfActive is a function keyword to select fixtures with active values in the programmer.",
+      "path": "Keywords/IfActive.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_ifoutput",
+      "title": "IfOutput",
+      "summary": "IfOutput is a function keyword to select fixtures based on their current output.",
+      "path": "Keywords/IfOutput.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_ifprog",
+      "title": "IfProg",
+      "summary": "IfProg is a function keyword to select fixtures with values in the programmer.",
+      "path": "Keywords/IfProg.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_image",
+      "title": "Image keyword",
+      "summary": "The keyword Image is an object keyword.",
+      "path": "Keywords/Image keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_import",
+      "title": "Import",
+      "summary": "Import is a function keyword to bring data from external .xml and .xmlp libraries into the show file.",
+      "path": "Keywords/Import.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_info",
+      "title": "Info",
+      "summary": "Info is a function keyword to add or display user info to an object.",
+      "path": "Keywords/Info.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_insert",
+      "title": "Insert",
+      "summary": "The Insert keyword is a function keyword to insert pool objects between two other already taken pool objects.",
+      "path": "Keywords/Insert.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_interleave",
+      "title": "Interleave keyword",
+      "summary": "Interleave is used to set ranges in the MAtricks or to create a virtual array of the fixtures selected.",
+      "path": "Keywords/Interleave keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_invert",
+      "title": "Invert",
+      "summary": "Invert is a function to invert the selection status of fixtures.",
+      "path": "Keywords/Invert.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_invitestation",
+      "title": "InviteStation",
+      "summary": "InviteStation is a function keyword to bring other stations into the session.",
+      "path": "Keywords/InviteStation.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_item3d",
+      "title": "Item3D keyword",
+      "summary": "Item3D is an object keyword used to modify 3D objects in grandMA 3D.",
+      "path": "Keywords/Item3D keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_joinsession",
+      "title": "JoinSession",
+      "summary": "JoinSession is a function used to join or create a session.",
+      "path": "Keywords/JoinSession.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_kill",
+      "title": "Kill",
+      "summary": "Kill is a Go+ function that additionally will turn off all other executor objects.",
+      "path": "Keywords/Kill.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_label",
+      "title": "Label",
+      "summary": "Label is a function used to give names to objects.",
+      "path": "Keywords/Label.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_layer",
+      "title": "Layer",
+      "summary": "Layer is a function keyword to change the working layer of the attribute encoders.",
+      "path": "Keywords/Layer.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_layout",
+      "title": "Layout",
+      "summary": "Layout is an object-type representing a layout of fixtures and other objects.",
+      "path": "Keywords/Layout.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_learn",
+      "title": "Learn",
+      "summary": "With the learn command you set the speed by tapping for:",
+      "path": "Keywords/Learn.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_leavesession",
+      "title": "LeaveSession",
+      "summary": "The LeaveSession keyword is a function keyword to leave the current session.",
+      "path": "Keywords/LeaveSession.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_list",
+      "title": "List",
+      "summary": "The List keyword displays show data in the command line feedback window.",
+      "path": "Keywords/List.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listeffectlibrary",
+      "title": "ListEffectLibrary",
+      "summary": "The ListEffectLibrary is a function keyword to displays the .xml files in effects folder of the selected drive in the command line feedback window.",
+      "path": "Keywords/ListEffectLibrary.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listfadermodules",
+      "title": "ListFaderModules",
+      "summary": "The ListFaderModules keyword is a function keyword to display all available internal and external wings (= executor modules) in the command line feedback window.",
+      "path": "Keywords/ListFaderModules.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listlibrary",
+      "title": "ListLibrary",
+      "summary": "The ListLirbrary keyword is a function keyword to display the fixture type library in the command line feedback window.",
+      "path": "Keywords/ListLibrary.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listmacrolibrary",
+      "title": "ListMacroLibrary",
+      "summary": "The ListMacroLibrary is a function keyword to displays the .xml files in macro folder of the selected drive in the command line feedback window.",
+      "path": "Keywords/ListMacroLibrary.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listoops",
+      "title": "ListOops",
+      "summary": "The ListOops keyword is a function keyword to get the Oops list in the command line feedback window displayed.",
+      "path": "Keywords/ListOops.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listowner",
+      "title": "ListOwner",
+      "summary": "ListOwner is used as a troubleshooting keyword in case of a multi user access conflict.",
+      "path": "Keywords/ListOwner.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listpluginlibrary",
+      "title": "ListPluginLibrary",
+      "summary": "The ListPluginLibrary is a function keyword to displays the .xml files in the plugins folder of the selected drive in the command line feedback window.",
+      "path": "Keywords/ListPluginLibrary.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listshows",
+      "title": "ListShows",
+      "summary": "The ListShows keyword is a function keyword to display the show files on the selected drive in the Command Line Feedback window.",
+      "path": "Keywords/ListShows.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listupdate",
+      "title": "ListUpdate",
+      "summary": "The ListUpdate keyword is a function keyword to get the objects in the command line displayed that can be updated.",
+      "path": "Keywords/ListUpdate.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listuservar",
+      "title": "ListUserVar",
+      "summary": "The ListUserVar keyword is a function keyword to get the user specific variables and their values in the Command Line Feedback window displayed.",
+      "path": "Keywords/ListUserVar.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_listvar",
+      "title": "ListVar",
+      "summary": "The ListVar keyword is a function keyword to get the variables and their values in the Command Line Feedback window displayed.",
+      "path": "Keywords/ListVar.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_load",
+      "title": "Load",
+      "summary": "The load keyword is a function keyword used to prepare an executor to jump to another cue rather than jumping to the next cue when a Go+ is performed on the executor.",
+      "path": "Keywords/Load.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_loadnext",
+      "title": "LoadNext",
+      "summary": "LoadNext is a function keyword.",
+      "path": "Keywords/LoadNext.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_loadprev",
+      "title": "LoadPrev keyword",
+      "summary": "LoadPrev is a function keyword.",
+      "path": "Keywords/LoadPrev keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_loadshow",
+      "title": "LoadShow",
+      "summary": "The LoadShow keyword loads a show from the selected drive.",
+      "path": "Keywords/LoadShow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_locate",
+      "title": "Locate",
+      "summary": "The locate keyword is a function keyword to locate assigned objects on executors.",
+      "path": "Keywords/Locate.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_lock",
+      "title": "Lock",
+      "summary": "The lock keyword is a function keyword to lock objects.",
+      "path": "Keywords/Lock.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_login",
+      "title": "Login",
+      "summary": "The Login keyword is a function keyword to login another user.",
+      "path": "Keywords/Login.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_logout",
+      "title": "Logout",
+      "summary": "The logout keyword is a function keyword to logout the current user and change to the guest user.",
+      "path": "Keywords/Logout.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_lua",
+      "title": "Lua",
+      "summary": "This keyword is used to execute commands written in the script language Lua.",
+      "path": "Keywords/Lua.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricks",
+      "title": "MAtricks",
+      "summary": "The MAtricks keyword acts as an object type and as a mode.",
+      "path": "Keywords/MAtricks.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricksblocks",
+      "title": "MAtricksBlocks",
+      "summary": "MAtricksBlocks is a function to set the MAtricks Blocks values.",
+      "path": "Keywords/MAtricksBlocks.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricksfilter",
+      "title": "MAtricksFilter",
+      "summary": "MatricksFilter is a function keyword to set the Matricks filter values.",
+      "path": "Keywords/MAtricksFilter.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricksgroups",
+      "title": "MAtricksGroups",
+      "summary": "MAtricksGroups is a function keyword to set the Align Groups.",
+      "path": "Keywords/MAtricksGroups.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricksinterleave",
+      "title": "MAtricksInterleave",
+      "summary": "MatricksInterleave is a function keyword to create a virtual array of the fixture selection.",
+      "path": "Keywords/MAtricksInterleave.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matricksreset",
+      "title": "MAtricksReset",
+      "summary": "The MAtricksReset is a function keyword to turn off all active MAtricks settings.",
+      "path": "Keywords/MAtricksReset.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_matrickswings",
+      "title": "MAtricksWings",
+      "summary": "MAtricksWings is a function keyword to set the MAtricks Wings value.",
+      "path": "Keywords/MAtricksWings.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_macro",
+      "title": "Macro",
+      "summary": "The Macro keyword is an object keyword access Macros.",
+      "path": "Keywords/Macro.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_manualxfade",
+      "title": "ManualXFade keyword",
+      "summary": "",
+      "path": "Keywords/ManualXFade keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_mask",
+      "title": "Mask",
+      "summary": "The Mask keyword is an object keyword to access Masks in the Mask pool.",
+      "path": "Keywords/Mask.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_master",
+      "title": "Master",
+      "summary": "The Master keyword is a function keyword to assign an executor the function master.",
+      "path": "Keywords/Master.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_masterfade",
+      "title": "MasterFade",
+      "summary": "MasterFade keyword is a function to adjust the on and off fade time of chasers and effects, and the off fade time for sequence executors.",
+      "path": "Keywords/MasterFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_mediaserver",
+      "title": "MediaServer keyword",
+      "summary": "The keyword MediaServer is an object keyword and is used in connection with CITP.",
+      "path": "Keywords/MediaServer keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_menu",
+      "title": "Menu",
+      "summary": "With the Menu keyword you can open and close menus.",
+      "path": "Keywords/Menu.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_message",
+      "title": "Message",
+      "summary": "The Message keyword is a function keyword to create Messages in the system monitor.",
+      "path": "Keywords/Message.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_messages",
+      "title": "Messages",
+      "summary": "With the Messages keyword you can",
+      "path": "Keywords/Messages.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_midicontrol",
+      "title": "MidiControl",
+      "summary": "The MidiControl keyword is a function keyword to transmit MIDI control change messages via the MidiOut port.",
+      "path": "Keywords/MidiControl.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_midinote",
+      "title": "MidiNote",
+      "summary": "With the MidiNote command, you send MIDI Note messages via the Midi Out port at the back of the console.",
+      "path": "Keywords/MidiNote.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_midiprogram",
+      "title": "MidiProgram",
+      "summary": "The MidiProgram keyword is a function keyword to transmit MIDI program change messages via the MidiOut port.",
+      "path": "Keywords/MidiProgram.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_model",
+      "title": "Model",
+      "summary": "The Model keyword is an object keyword to access 3D models.",
+      "path": "Keywords/Model.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_move",
+      "title": "Move",
+      "summary": "The Move keyword is a function keyword to move objects and give them a new object ID.",
+      "path": "Keywords/Move.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_move3d",
+      "title": "Move3D",
+      "summary": "The Move3D keyword moves 3D objects in the Stage View.",
+      "path": "Keywords/Move3D.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_networkinfo",
+      "title": "NetworkInfo",
+      "summary": "The NetworkInfo keyword is a function keyword to display information about the network in the command line feedback window.",
+      "path": "Keywords/NetworkInfo.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_networknodeinfo",
+      "title": "NetworkNodeInfo",
+      "summary": "The NetworkNodeInfo keyword displays all in the network available MA Nodes in the command line feedback window.",
+      "path": "Keywords/NetworkNodeInfo.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_networknodeupdate",
+      "title": "NetworkNodeUpdate",
+      "summary": "NetworkNodeUpdate is a function keyword used for the update of the following MA Nodes:",
+      "path": "Keywords/NetworkNodeUpdate.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_networkspeedtest",
+      "title": "NetworkSpeedTest",
+      "summary": "Do not use the NetworkSpeedTest keyword in show situations.The NetworkSpeedTest keyword blocks all other network traffic and DMX traffic for some seconds.",
+      "path": "Keywords/NetworkSpeedTest.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_newshow",
+      "title": "NewShow",
+      "summary": "The NewShow keyword is a function keyword to create new shows.",
+      "path": "Keywords/NewShow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_next",
+      "title": "Next",
+      "summary": "If no fixtures or channels are selected and the default keyword is Fixture or Channel, the Next keyword selects the fixture with lowest fixture or channel ID.",
+      "path": "Keywords/Next.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_nextrow",
+      "title": "NextRow",
+      "summary": "NextRow is a function keyword to increase the MAtricks property single y.",
+      "path": "Keywords/NextRow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_normal",
+      "title": "Normal",
+      "summary": "With the Normal keyword you set the dimmer of the fixtures to the defined Normal value.",
+      "path": "Keywords/Normal.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_off",
+      "title": "Off",
+      "summary": "The Off keyword can be a function keyword or a helping keyword.",
+      "path": "Keywords/Off.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_on",
+      "title": "On",
+      "summary": "The On keyword can be a function keyword or a helping keyword.",
+      "path": "Keywords/On.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_oops",
+      "title": "Oops",
+      "summary": "The Oops keyword is a function keyword to undo the last:",
+      "path": "Keywords/Oops.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_or",
+      "title": "Or keyword",
+      "summary": "Or is a helping keyword and is usually used along with the keyword If.",
+      "path": "Keywords/Or keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_outdelay",
+      "title": "OutDelay",
+      "summary": "The OutDelay keyword is a helping keyword to set an outdelay time.",
+      "path": "Keywords/OutDelay.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_outfade",
+      "title": "OutFade",
+      "summary": "The OutFade keyword is a helping keyword to set an outfade time.",
+      "path": "Keywords/OutFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_pmarea",
+      "title": "PMArea",
+      "summary": "The PMArea keyword is an object keyword to access pixel mapper areas and pixel mapper outputs.",
+      "path": "Keywords/PMArea.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_psr",
+      "title": "PSR",
+      "summary": "Requirement: The partial show read is prepared.",
+      "path": "Keywords/PSR.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_psrlist",
+      "title": "PSRList",
+      "summary": "The PSRList keyword lists all available and changed objects of the show file which can be inserted.",
+      "path": "Keywords/PSRList.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_psrprepare",
+      "title": "PSRPrepare",
+      "summary": "PSRPrepare prepares a showfile for PartialShowRead.",
+      "path": "Keywords/PSRPrepare.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_page",
+      "title": "Page",
+      "summary": "The Page keyword is an object keyword to access pages.",
+      "path": "Keywords/Page.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_parentheses",
+      "title": "Parentheses ( ) Character",
+      "summary": "With the ( ) parentheses you create pop-up dialog in macros, to get user input.",
+      "path": "Keywords/Parentheses ( ) Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_park",
+      "title": "Park",
+      "summary": "The Park keyword is a function keyword to lock DMX output values of attributes.",
+      "path": "Keywords/Park.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_part",
+      "title": "Part",
+      "summary": "The Part keyword is an object keyword to segment cues in parts.",
+      "path": "Keywords/Part.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_paste",
+      "title": "Paste",
+      "summary": "With the Paste keyword, you will paste previous copied content from the clipboard.xml, or move previous Cut object-lists.",
+      "path": "Keywords/Paste.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_pause",
+      "title": "Pause",
+      "summary": "The Pause keyword is a function keyword to pause:",
+      "path": "Keywords/Pause.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_plugin",
+      "title": "Plugin",
+      "summary": "The Plugin keyword is an object keyword to access Plugins.",
+      "path": "Keywords/Plugin.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_preset",
+      "title": "Preset",
+      "summary": "With the Preset keyword you can:",
+      "path": "Keywords/Preset.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_presettype",
+      "title": "PresetType",
+      "summary": "With the PresetType keyword you can:",
+      "path": "Keywords/PresetType.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_prevrow",
+      "title": "PrevRow",
+      "summary": "If MAtricksInterleave is on, PrevRow reduce the Single Y value by one.",
+      "path": "Keywords/PrevRow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_preview",
+      "title": "Preview",
+      "summary": "The Preview keyword creates a preview of the programmed output without having an actual DMX output.",
+      "path": "Keywords/Preview.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_previewedit",
+      "title": "PreviewEdit",
+      "summary": "The PreviewEdit toggles between the live programmer and the blind preview editor.",
+      "path": "Keywords/PreviewEdit.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_previewexecutor",
+      "title": "PreviewExecutor",
+      "summary": "Requirement: A sequence loaded in the preview editor.",
+      "path": "Keywords/PreviewExecutor.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_previous",
+      "title": "Previous",
+      "summary": "The Previous keyword has multiple functions.",
+      "path": "Keywords/Previous.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_profile",
+      "title": "Profile",
+      "summary": "The Profile keyword is an object keyword to access DMX profiles and DMX profiles points.",
+      "path": "Keywords/Profile.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_protocol",
+      "title": "Protocol",
+      "summary": "The Protocol keyword is an object keyword to access the network protocols.",
+      "path": "Keywords/Protocol.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_marks",
+      "title": "Quotation Marks - - Character",
+      "summary": "",
+      "path": "Keywords/Quotation Marks - - Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rate",
+      "title": "Rate",
+      "summary": "The Rate keyword is a function to adjust the Rate of an executor.",
+      "path": "Keywords/Rate.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rate1",
+      "title": "Rate1",
+      "summary": "The Rate1 keyword resets the rate to 1:1.",
+      "path": "Keywords/Rate1.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmautomatch",
+      "title": "RdmAutomatch",
+      "summary": "Requirements:",
+      "path": "Keywords/RdmAutomatch.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmautopatch",
+      "title": "RdmAutopatch",
+      "summary": "Requirements:",
+      "path": "Keywords/RdmAutopatch.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmfixturetype",
+      "title": "RdmFixtureType",
+      "summary": "The RdmFixtureType is an object keyword to access Rdm fixtures with a Rdm fixture type ID.",
+      "path": "Keywords/RdmFixtureType.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdminfo",
+      "title": "RdmInfo",
+      "summary": "The RdmInfo keyword opens the RDM info pop-up with the actual RDM information to the entered fixture or channel.",
+      "path": "Keywords/RdmInfo.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmlist",
+      "title": "RdmList",
+      "summary": "The RdmList keyword generates a list of the received RDM data.",
+      "path": "Keywords/RdmList.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmsetparameter",
+      "title": "RdmSetParameter",
+      "summary": "With the RdmSetParameter keyword you can set RDM parameters by using the command line.",
+      "path": "Keywords/RdmSetParameter.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmsetpatch",
+      "title": "RdmSetpatch",
+      "summary": "With the RdmSetPatch keyword you set the DMX address of a RDM fixture by using the command line.",
+      "path": "Keywords/RdmSetpatch.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rdmunmatch",
+      "title": "RdmUnmatch",
+      "summary": "The RdmUnmatch keyword unmatches previous matched RDM devices in the show file.",
+      "path": "Keywords/RdmUnmatch.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_reboot",
+      "title": "Reboot",
+      "summary": "The Reboot keyword, shutdown the station and boot it up again.",
+      "path": "Keywords/Reboot.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_record",
+      "title": "Record",
+      "summary": "The Record keyword records real time actions as timecodes or macros.",
+      "path": "Keywords/Record.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_release",
+      "title": "Release",
+      "summary": "The Release keyword enters release values in the programmer for attributes by the given object list, filtered by the current selection.",
+      "path": "Keywords/Release.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_reloadplugins",
+      "title": "ReloadPlugins",
+      "summary": "The ReloadPlugins keyword restarts the LUA engine.",
+      "path": "Keywords/ReloadPlugins.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_remote",
+      "title": "Remote",
+      "summary": "The Remote keyword is an object keyword to access the remote input types.",
+      "path": "Keywords/Remote.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_remotecommand",
+      "title": "RemoteCommand",
+      "summary": "The RemoteCommand keyword executes commands at a specific console.",
+      "path": "Keywords/RemoteCommand.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_remove",
+      "title": "Remove",
+      "summary": "The Remove keyword enters remove values in the programmer for attributes by the given object list, filtered by the current selection.",
+      "path": "Keywords/Remove.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_removeindividuals",
+      "title": "RemoveIndividuals",
+      "summary": "RemoveIndividuals is a command used to delete individual values of effects and effect lines.",
+      "path": "Keywords/RemoveIndividuals.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_replace",
+      "title": "Replace",
+      "summary": "The replace keyword replaces object and values.",
+      "path": "Keywords/Replace.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_resetdmxselection",
+      "title": "ResetDmxSelection",
+      "summary": "The ResetDmxSelection keyword clears the selection in the DMX tester.",
+      "path": "Keywords/ResetDmxSelection.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_resetguid",
+      "title": "ResetGuid keyword",
+      "summary": "ResetGuid resets the identifiers that are unique in every object.",
+      "path": "Keywords/ResetGuid keyword.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_restart",
+      "title": "Restart",
+      "summary": "The Restart keyword restarts the application.",
+      "path": "Keywords/Restart.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_root",
+      "title": "Root",
+      "summary": "The Root keyword access the root in the object tree.",
+      "path": "Keywords/Root.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_rotate3d",
+      "title": "Rotate3D",
+      "summary": "The Rotate3D keyword rotates 3D objects in the Stage View.",
+      "path": "Keywords/Rotate3D.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_saveshow",
+      "title": "SaveShow",
+      "summary": "The SaveShow keyword saves the show on the selected drive.",
+      "path": "Keywords/SaveShow.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_screen",
+      "title": "Screen",
+      "summary": "The Screen keyword represents the screens.",
+      "path": "Keywords/Screen.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_search",
+      "title": "Search",
+      "summary": "The Search Keyword searches for objects and values in the show.",
+      "path": "Keywords/Search.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_searchresult",
+      "title": "SearchResult",
+      "summary": "The SearchResult keyword opens the world search result after an executed search command.",
+      "path": "Keywords/SearchResult.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_selfix",
+      "title": "SelFix",
+      "summary": "The SelFix keyword creates fixture selections in the programmer.",
+      "path": "Keywords/SelFix.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_select",
+      "title": "Select",
+      "summary": "The Select keyword, selects objects as default objects.",
+      "path": "Keywords/Select.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_selectdrive",
+      "title": "SelectDrive",
+      "summary": "The SelectDrive keyword select the drive in the Backup Menu, for the following functions:",
+      "path": "Keywords/SelectDrive.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_selection",
+      "title": "Selection",
+      "summary": "The Selection keyword represent the current channels and fixtures selection in the programmer.",
+      "path": "Keywords/Selection.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_semicolon",
+      "title": "Semicolon ; Character",
+      "summary": "The semicolon separates multiple commands.",
+      "path": "Keywords/Semicolon ; Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_sequence",
+      "title": "Sequence",
+      "summary": "The default function of the sequence keyword is SelFix.",
+      "path": "Keywords/Sequence.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_sethostname",
+      "title": "SetHostname",
+      "summary": "The SetHostname keyword, sets the station name of the console.",
+      "path": "Keywords/SetHostname.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_setip",
+      "title": "SetIP",
+      "summary": "The SetIP keyword changes the IP address of the Ethernet interfaces of the console or station.",
+      "path": "Keywords/SetIP.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_setnetworkspeed",
+      "title": "SetNetworkSpeed",
+      "summary": "The SetNetworkSpeed keyword, changes the port speed of the first network adapter of grandMA2 consoles and MA NPU.",
+      "path": "Keywords/SetNetworkSpeed.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_setuservar",
+      "title": "SetUserVar",
+      "summary": "The SetUserVar keyword sets user profile specific variables.",
+      "path": "Keywords/SetUserVar.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_setvar",
+      "title": "SetVar",
+      "summary": "The SetVar keyword sets global show variables.",
+      "path": "Keywords/SetVar.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_setup",
+      "title": "Setup",
+      "summary": "The Setup keyword opens or closes the setup menu.",
+      "path": "Keywords/Setup.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_shuffleselection",
+      "title": "ShuffleSelection",
+      "summary": "The ShuffleSelection keyword mix-up the order of the selected fixture or channel.",
+      "path": "Keywords/ShuffleSelection.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_shufflevalues",
+      "title": "ShuffleValues",
+      "summary": "The ShuffleValues keyword mix-up the values of the selected fixtures or channels.",
+      "path": "Keywords/ShuffleValues.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_shutdown",
+      "title": "Shutdown",
+      "summary": "The shutdown keyword switches the grandMA2 console off or close the grandMA2 onPC.",
+      "path": "Keywords/Shutdown.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_slash",
+      "title": "Slash - Character",
+      "summary": "The slash separates entered object properties or parameter options.",
+      "path": "Keywords/Slash - Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_snappercent",
+      "title": "SnapPercent",
+      "summary": "To use the SnapPercent it is necessary that attributes of the fixture types must have Snap On.",
+      "path": "Keywords/SnapPercent.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_solo",
+      "title": "Solo",
+      "summary": "The Solo keyword forces zero values for intensity output for attributes of all unselected fixtures or channels.",
+      "path": "Keywords/Solo.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_specialmaster",
+      "title": "SpecialMaster",
+      "summary": "Specialmaster is an object type that holds predefined objects for global control.",
+      "path": "Keywords/SpecialMaster.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_speed",
+      "title": "Speed",
+      "summary": "With the Speed keyword, you assign faders the function speed.",
+      "path": "Keywords/Speed.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_square_brackets",
+      "title": "Square Brackets [ ] Character",
+      "summary": "Square brackets [ ] are used in macros.",
+      "path": "Keywords/Square Brackets [ ] Character.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_stepfade",
+      "title": "StepFade",
+      "summary": "With the StepFade keyword, you assign executors as a step fader.",
+      "path": "Keywords/StepFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_stepinfade",
+      "title": "StepInFade",
+      "summary": "The StepInFade keyword assigns executors as a step in fader.",
+      "path": "Keywords/StepInFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_stepoutfade",
+      "title": "StepOutFade",
+      "summary": "With the StepOutFade keyword, you assign executors as a step out fader.",
+      "path": "Keywords/StepOutFade.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_stomp",
+      "title": "Stomp",
+      "summary": "The Stomp keyword applies values and stops running effects.",
+      "path": "Keywords/Stomp.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_store",
+      "title": "Store",
+      "summary": "The store keyword, stores functions in the show file.",
+      "path": "Keywords/Store.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_storelook",
+      "title": "StoreLook",
+      "summary": "StoreLook stores all dimmer values from all fixtures in the show.",
+      "path": "Keywords/StoreLook.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_surface",
+      "title": "Surface",
+      "summary": "The Surface keyword, loads a created surface form the Wing & Monitor Setup.",
+      "path": "Keywords/Surface.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_swop",
+      "title": "Swop",
+      "summary": "The Swop keyword temporary overrides the master level of executors to full and set all other master levels to zero.",
+      "path": "Keywords/Swop.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_swopgo",
+      "title": "SwopGo",
+      "summary": "The SwopGo keyword temporary overrides the master level of executors to full and all other master levels to zero, and goes to the next cue.",
+      "path": "Keywords/SwopGo.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_swopon",
+      "title": "SwopOn",
+      "summary": "The SwopOn keyword temporary overrides the master level of executors to full and all other master levels to zero.",
+      "path": "Keywords/SwopOn.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_synceffects",
+      "title": "SyncEffects",
+      "summary": "The SyncEffects keyword starts all running effects synchronous.",
+      "path": "Keywords/SyncEffects.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_takecontrol",
+      "title": "TakeControl",
+      "summary": "TakeControl is a keyword used if multiple users are in a session.",
+      "path": "Keywords/TakeControl.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_telnet",
+      "title": "Telnet",
+      "summary": "The telnet receiver needs to read the commands without a telnet login.",
+      "path": "Keywords/Telnet.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_temp",
+      "title": "Temp",
+      "summary": "The Temp keyword turns an executor on, as long as you hold the executor button.",
+      "path": "Keywords/Temp.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_tempfader",
+      "title": "TempFader",
+      "summary": "The TempFader keyword, is a function that crossfades the cue on when pulled up, and crossfades the cue off when pulled down.",
+      "path": "Keywords/TempFader.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_thru",
+      "title": "Thru",
+      "summary": "The Thru keyword reference a range of objects / values.",
+      "path": "Keywords/Thru.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_timecode",
+      "title": "Timecode",
+      "summary": "The Timecode keyword, select the timecode by default.",
+      "path": "Keywords/Timecode.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_timecodeslot",
+      "title": "TimecodeSlot",
+      "summary": "TimecodeSlot is an object type representing the 8 different possible timecode streams.",
+      "path": "Keywords/TimecodeSlot.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_timer",
+      "title": "Timer",
+      "summary": "With the Timer keyword you can edit, start, pause, restart, switch off, select, lock, unlock, and assign timers.",
+      "path": "Keywords/Timer.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_tofull",
+      "title": "ToFull",
+      "summary": "The ToFull keyword sets the masterlevel of objects to 100 %.",
+      "path": "Keywords/ToFull.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_tozero",
+      "title": "ToZero",
+      "summary": "The ToZero keyword sets the masterlevel of objects to zero.",
+      "path": "Keywords/ToZero.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_toggle",
+      "title": "Toggle",
+      "summary": "The Toggle keyword acts as an on or off keyword, depending of the on/off-status of the object or function/mode it is applied to.",
+      "path": "Keywords/Toggle.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_tools",
+      "title": "Tools",
+      "summary": "The Tools keyword opens or closes the tools menu.",
+      "path": "Keywords/Tools.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_top",
+      "title": "Top",
+      "summary": "The Top keyword jumps to the beginning of the cue list or sets the timecode marker at the beginning of the timecode show.",
+      "path": "Keywords/Top.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_unblock",
+      "title": "Unblock",
+      "summary": "The unblock keyword convert blocked values in cues (displayed white) into tracking values (displayed magenta).",
+      "path": "Keywords/Unblock.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_unlock",
+      "title": "Unlock",
+      "summary": "With the unlock keyword, you can unlock previous locked objects.",
+      "path": "Keywords/Unlock.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_unpark",
+      "title": "Unpark",
+      "summary": "With the Unpark keyword, you can unpark previous parked DMX channels.",
+      "path": "Keywords/Unpark.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_up",
+      "title": "Up",
+      "summary": "The Up keyword scrolls one page up in focused window.",
+      "path": "Keywords/Up.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_update",
+      "title": "Update",
+      "summary": "The update keyword, updates functions in its source objects.",
+      "path": "Keywords/Update.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_updatefirmware",
+      "title": "UpdateFirmware",
+      "summary": "The update firmware process can take up to 60 seconds.",
+      "path": "Keywords/UpdateFirmware.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_updatesoftware",
+      "title": "UpdateSoftware",
+      "summary": "Requirement:",
+      "path": "Keywords/UpdateSoftware.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_updatethumbnails",
+      "title": "UpdateThumbnails",
+      "summary": "The UpdateThumbnails keyword updates the thumbnails of the media servers.",
+      "path": "Keywords/UpdateThumbnails.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_user",
+      "title": "User",
+      "summary": "The User keyword displays user details in the command line feedback window.",
+      "path": "Keywords/User.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_userprofile",
+      "title": "UserProfile",
+      "summary": "The keyword UserProfile displays the user profiles in the command line feedback.",
+      "path": "Keywords/UserProfile.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_vpupixelmapperview",
+      "title": "VPU pixel mapper view",
+      "summary": "To access the VPU Pixel Mapper View, tap on an empty part of a screen.",
+      "path": "Keywords/VPU pixel mapper view.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_value",
+      "title": "Value",
+      "summary": "With the value keyword you can:",
+      "path": "Keywords/Value.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_version",
+      "title": "Version",
+      "summary": "The version keyword gives you access to version details of the console or software in the commandline feedback window.",
+      "path": "Keywords/Version.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_view",
+      "title": "View",
+      "summary": "The view keyword calls views on a screen.",
+      "path": "Keywords/View.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_viewbutton",
+      "title": "ViewButton",
+      "summary": "The ViewButton keyword calls the assigned function on the view button.",
+      "path": "Keywords/ViewButton.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_viewpage",
+      "title": "ViewPage",
+      "summary": "The ViewPage keyword calls the view pages.",
+      "path": "Keywords/ViewPage.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_webremoteprogonly",
+      "title": "WebRemoteProgOnly",
+      "summary": "The WebRemoteProgOnly keyword, selects in the web remote fixture sheet the option Prg Only (= Programmer Only).",
+      "path": "Keywords/WebRemoteProgOnly.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_with",
+      "title": "With",
+      "summary": "The With keyword is necessary for the replace function.",
+      "path": "Keywords/With.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_world",
+      "title": "World",
+      "summary": "The world keyword call worlds along with its filter, and limit the access to the parameters in the word.",
+      "path": "Keywords/World.md",
+      "type": "keyword"
+    },
+    {
+      "slug": "key_keyword_zero",
+      "title": "Zero",
+      "summary": "The keyword Zero sets the intensity of the dimmer to zero:",
+      "path": "Keywords/Zero.md",
+      "type": "keyword"
+    }
+  ],
+  "command_syntax_pages": [
+    {
+      "slug": "key_cs_all_keywords",
+      "title": "All keywords",
+      "summary": "This topic displays a list of all keywords.",
+      "path": "Pages/Command Syntax and Keywords/All keywords.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_attribute_list",
+      "title": "Attribute List",
+      "summary": "An attribute list is an object list of attributes.",
+      "path": "Pages/Command Syntax and Keywords/Attribute List.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_cmd_in_cues",
+      "title": "Commands in cues",
+      "summary": "Each cue can execute a command.",
+      "path": "Pages/Command Syntax and Keywords/Commands in cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_cue_timings",
+      "title": "Cue timings",
+      "summary": "Cue timing is about the stored values transition from one cue to the next.",
+      "path": "Pages/Command Syntax and Keywords/Cue timings.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_delete_cues",
+      "title": "Delete Cues",
+      "summary": "Deleting a cue will remove the values stored in the cue.",
+      "path": "Pages/Command Syntax and Keywords/Delete Cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_executor_list",
+      "title": "Executor List",
+      "summary": "An executor list is an object list of executors.",
+      "path": "Pages/Command Syntax and Keywords/Executor List.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_function_keywords",
+      "title": "Function Keywords",
+      "summary": "Function keywords perform a task or a function.",
+      "path": "Pages/Command Syntax and Keywords/Function Keywords.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_general_syntax_rules",
+      "title": "General Syntax Rules",
+      "summary": "The command line syntax is used to create valid expressions out of keywords.",
+      "path": "Pages/Command Syntax and Keywords/General Syntax Rules.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_helping_keywords",
+      "title": "Helping Keywords",
+      "summary": "Helping keywords are used to create a relation between functions and objects.",
+      "path": "Pages/Command Syntax and Keywords/Helping Keywords.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_cue_sequence",
+      "title": "Looking at the Cue Sequence",
+      "summary": "If your show has sequences with multiple cues, then it is very useful to be able to see the sequence and see the active cue and the settings for the cue change.",
+      "path": "Pages/Command Syntax and Keywords/Looking at the Cue Sequence.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_cue_content",
+      "title": "Looking at the cue content",
+      "summary": "There are two sheets that can be used to look at the content stored in cues - the stored values can also be edited using the sheet.",
+      "path": "Pages/Command Syntax and Keywords/Looking at the cue content.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_object_keywords",
+      "title": "Object Keywords",
+      "summary": "Object keywords are used to allocate objects in your show file.",
+      "path": "Pages/Command Syntax and Keywords/Object Keywords.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_object_list",
+      "title": "Object List",
+      "summary": "An object list is a list of objects of the same type.",
+      "path": "Pages/Command Syntax and Keywords/Object List.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_playback",
+      "title": "Playing back Cues",
+      "summary": "Cues are played back from the sequence.",
+      "path": "Pages/Command Syntax and Keywords/Playing back Cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_renumber_cues",
+      "title": "Renumber cues",
+      "summary": "Cue numbers can be changed.",
+      "path": "Pages/Command Syntax and Keywords/Renumber cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_selection_list",
+      "title": "Selection List",
+      "summary": "A selection list is a list of fixtures.",
+      "path": "Pages/Command Syntax and Keywords/Selection List.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_sequence_mini_executor",
+      "title": "Sequence mini executor",
+      "summary": "When a sequence is assigned to an executor, the mini executor view is displaying relevant information.",
+      "path": "Pages/Command Syntax and Keywords/Sequence mini executor.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_special_characters",
+      "title": "Special Characters",
+      "summary": "Special characters execute special functions.",
+      "path": "Pages/Command Syntax and Keywords/Special Characters.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_station_list",
+      "title": "Station List",
+      "summary": "[IP-address]",
+      "path": "Pages/Command Syntax and Keywords/Station List.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_store_options_default",
+      "title": "Store Options and Defaults",
+      "summary": "When cues are stored then there are some options that will be used.",
+      "path": "Pages/Command Syntax and Keywords/Store Options and Defaults.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_store",
+      "title": "Storing cues",
+      "summary": "Storing cues is actually quite simple.",
+      "path": "Pages/Command Syntax and Keywords/Storing cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_update_cues",
+      "title": "Update cues",
+      "summary": "The stored values in a cue can always be changed by storing new values into them.",
+      "path": "Pages/Command Syntax and Keywords/Update cues.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_what_are",
+      "title": "What are cues and sequences",
+      "summary": "Being able to store and recall a set of attribute values is one of the most important features of a control system.",
+      "path": "Pages/Command Syntax and Keywords/What are cues and sequences.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_what_is_mib",
+      "title": "What is MIB",
+      "summary": "This topic is about the concept of Move In Black (MIB).",
+      "path": "Pages/Command Syntax and Keywords/What is MIB.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_what_is_tracking",
+      "title": "What is Tracking",
+      "summary": "Tracking is the principle to only store the changes in the cues.",
+      "path": "Pages/Command Syntax and Keywords/What is Tracking.md",
+      "type": "page"
+    },
+    {
+      "slug": "key_cs_work_with_lists",
+      "title": "Work with Lists",
+      "summary": "There are several lists you can work with:",
+      "path": "Pages/Command Syntax and Keywords/Work with Lists.md",
+      "type": "page"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "networking_pages": [
+    {
+      "slug": "key_network_session_add_device",
+      "title": "Adding devices to the session",
+      "summary": "MA devices can be added to the session.",
+      "path": "Pages/Networking/Adding devices to the session.md"
+    },
+    {
+      "slug": "key_network_ftp",
+      "title": "FTP connection to console and NPU",
+      "summary": "The consoles and the grandMA2 NPU can be accessed using a FTP client program.",
+      "path": "Pages/Networking/FTP connection to console and NPU.md"
+    },
+    {
+      "slug": "key_network_dmx_get_in_out",
+      "title": "Getting DMX in and out of the system",
+      "summary": "All the 5-pin XLR connectors in a grandMA2 system is a DMX port.",
+      "path": "Pages/Networking/Getting DMX in and out of the system.md"
+    },
+    {
+      "slug": "key_network_session_create",
+      "title": "How to create a session",
+      "summary": "To create a session you need to give your station (console or onPC) a valid IP address.",
+      "path": "Pages/Networking/How to create a session.md"
+    },
+    {
+      "slug": "key_network_session_end_leave",
+      "title": "How to end or leave a session",
+      "summary": "A single station can be removed from a session or the entire session can be ended.",
+      "path": "Pages/Networking/How to end or leave a session.md"
+    },
+    {
+      "slug": "key_network_dmx_protocols",
+      "title": "Network DMX protocols",
+      "summary": "DMX can be transmitted or received using network DMX protocols instead of or together with the DMX ports in the system.",
+      "path": "Pages/Networking/Network DMX protocols.md"
+    },
+    {
+      "slug": "key_network_psn",
+      "title": "PosiStageNet (PSN)",
+      "summary": "PosiStageNet or PSN is a open protocol developed by MA Lighting and VYV Corporation - http://www.posistage.net/.",
+      "path": "Pages/Networking/PosiStageNet (PSN).md"
+    },
+    {
+      "slug": "key_network_session_protect",
+      "title": "Protecting the session and station",
+      "summary": "In a networked solution multiple stations and devices might be connected to the same network.",
+      "path": "Pages/Networking/Protecting the session and station.md"
+    },
+    {
+      "slug": "key_network_session_collision",
+      "title": "Session Collision",
+      "summary": "You might experience a Session Collision at some point.",
+      "path": "Pages/Networking/Session Collision.md"
+    },
+    {
+      "slug": "key_network_session",
+      "title": "Session control",
+      "summary": "To connect MA devices you need to create a session.",
+      "path": "Pages/Networking/Session control.md"
+    },
+    {
+      "slug": "key_network_set_ip_console",
+      "title": "Set the IP address in the console",
+      "summary": "An IP address in a matching range is needed to be able to connect devices.",
+      "path": "Pages/Networking/Set the IP address in the console.md"
+    },
+    {
+      "slug": "key_network_set_ip_onpc",
+      "title": "Set the IP address in the onPC",
+      "summary": "To change the IP address in the onPC, you first need to set the IP address in your computer.",
+      "path": "Pages/Networking/Set the IP address in the onPC.md"
+    },
+    {
+      "slug": "key_network_dmx_configure_ports",
+      "title": "Setting up DMX ports on MA devices",
+      "summary": "If there is only one station (console or onPC) in the system, then only the DMX ports on the station can be used.",
+      "path": "Pages/Networking/Setting up DMX ports on MA devices.md"
+    },
+    {
+      "slug": "key_network_citp_stream",
+      "title": "Streaming CITP video",
+      "summary": "CITP can be used to stream a video feed through the network.",
+      "path": "Pages/Networking/Streaming CITP video.md"
+    },
+    {
+      "slug": "key_network_citp_thumbnail",
+      "title": "Thumbnail exchange",
+      "summary": "CITP/MSEX protocols are used to transfer information between consoles, media server and visualizers.",
+      "path": "Pages/Networking/Thumbnail exchange.md"
+    },
+    {
+      "slug": "key_network_citp",
+      "title": "Using CITP",
+      "summary": "CITP (Controller Interface Transport Protocol) is a suite of Protocols used to exchange pictures and Video streams through a network.",
+      "path": "Pages/Networking/Using CITP.md"
+    },
+    {
+      "slug": "key_network_dhcp",
+      "title": "Using DHCP in MA devices",
+      "summary": "The grandMA2 supports the use of DHCP (Dynamic Host Configuration Protocol).",
+      "path": "Pages/Networking/Using DHCP in MA devices.md"
+    },
+    {
+      "slug": "key_networking_dmx_output",
+      "title": "What affects my DMX output-",
+      "summary": "A crash or a failure \u2013 this discontinues DMX output.",
+      "path": "Pages/Networking/What affects my DMX output-.md"
+    },
+    {
+      "slug": "key_network_what_is_network",
+      "title": "What is networking",
+      "summary": "Networking in grandMA2 can be a lot of things.",
+      "path": "Pages/Networking/What is networking.md"
+    }
+  ],
+  "remote_control_pages": [
+    {
+      "slug": "key_remote_control_hex_table",
+      "title": "Decimal \u2013 Hex Table",
+      "summary": "This is a table that compares Decimal, Hex, Art-Net, and ASCII numbers.",
+      "path": "Pages/Remote Control/Decimal \u2013 Hex Table.md"
+    },
+    {
+      "slug": "key_remote_control_msc",
+      "title": "MIDI Show Control (MSC)",
+      "summary": "MIDI Show Control (MSC) is a different way to remote control the system.",
+      "path": "Pages/Remote Control/MIDI Show Control (MSC).md"
+    },
+    {
+      "slug": "key_remote_control_input",
+      "title": "Remote Inputs",
+      "summary": "The Remote Input section can be found by pressing the Setup key and then Remote Input Setup in the Show tab.",
+      "path": "Pages/Remote Control/Remote Inputs.md"
+    },
+    {
+      "slug": "key_remote_control_telnet",
+      "title": "Telnet Remote",
+      "summary": "The grandMA2 can be remote controlled via Telnet.",
+      "path": "Pages/Remote Control/Telnet Remote.md"
+    },
+    {
+      "slug": "key_remote_control_web_remote",
+      "title": "Web Remote",
+      "summary": "The stations can be remote controlled by any browser connected to the system.",
+      "path": "Pages/Remote Control/Web Remote.md"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+[submodule "vendor/grandma2-manual-vault"]
+	path = vendor/grandma2-manual-vault
+	url = https://github.com/thisis-romar/grandma2-manual-vault.git

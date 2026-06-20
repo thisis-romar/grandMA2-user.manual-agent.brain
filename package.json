@@ -5,7 +5,9 @@
   "description": "Vault-agnostic agent brain: turns a spec-conforming Obsidian vault into an MCP knowledge server (retrieval + graph + memory). Repo: grandMA2-user.manual-agent.brain.",
   "type": "module",
   "license": "UNLICENSED",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
@@ -14,7 +16,8 @@
     "query": "tsx src/cli.ts query",
     "serve": "tsx src/cli.ts serve",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
@@ -23,11 +26,16 @@
     "yaml": "^2.5.0",
     "zod": "^3.23.8"
   },
+  "lint-staged": {
+    "*.ts": "eslint"
+  },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^22.8.0",
     "eslint": "^9.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
     "prettier": "^3.3.3",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
