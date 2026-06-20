@@ -15,6 +15,7 @@
     "index": "tsx src/cli.ts index",
     "query": "tsx src/cli.ts query",
     "serve": "tsx src/cli.ts serve",
+    "eval": "tsx src/cli.ts eval",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky"

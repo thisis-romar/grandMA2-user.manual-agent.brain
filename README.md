@@ -25,7 +25,9 @@ Working today, no external services required:
 - **Graph**: `neighbours` / `backlinks` / `related` (`src/graph.ts`).
 - **Memory**: validated note write-back (`src/memory.ts`).
 - **MCP server** over stdio exposing all tools via `registerTool` (`src/mcp/server.ts`).
-- **CLI**: `index` / `query` / `serve` (`src/cli.ts`).
+- **CLI**: `index` / `query` / `serve` / `eval` (`src/cli.ts`).
+- **Eval harness** (`src/eval.ts`): scores a golden query set with recall@k + MRR over any
+  retriever (in-memory or SQLite/FTS, note- or section-level) — a regression gate for retrieval.
 
 Roadmap (next): **P2** embeddings + `sqlite-vec` hybrid retrieval · **P3** richer MCP
 surface · **P4** memory audit (git) · **P5** multi-vault.
@@ -53,6 +55,10 @@ npm run serve   examples/sample-vault        # MCP server over stdio
 
 # point it at the real grandMA2 vault (vendored as a submodule):
 npm run index   vendor/grandma2-manual-vault
+
+# score retrieval quality against a golden query set (recall@k + MRR):
+npm run eval    examples/sample-vault examples/golden-queries.json          # in-memory
+npm run eval    examples/sample-vault examples/golden-queries.json -- --db  # SQLite/FTS
 ```
 
 ### Wire into Claude Code
