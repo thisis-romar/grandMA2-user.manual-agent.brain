@@ -44,7 +44,7 @@ Self-hosted fallback (no rate limits): `open-context7` (Apache 2.0, Docker, drop
 ## Model attribution & provenance
 
 `.husky/prepare-commit-msg` calls `scripts/commit-trailers.sh` to auto-append
-authoring trailers (skipped if a `Co-authored-by` already exists):
+authoring trailers:
 
 ```
 Co-authored-by: Claude Opus 4.8 <noreply@anthropic.com>
@@ -52,6 +52,12 @@ Generated-with: Claude Code 2.1.183
 Claude-Session: <session id>
 Claude-Entrypoint: remote
 ```
+
+The hook is **additive**: it pipes each trailer through
+`git interpret-trailers --if-exists doNothing`, so it only adds keys not already
+present. In the web/remote harness a `Co-Authored-By` + `Claude-Session` may already
+be injected — the hook leaves those alone and still fills in the missing
+`Generated-with` / `Claude-Entrypoint` (no duplicate co-authors).
 
 Model resolution (`scripts/detect-ai-model.sh`) cascade:
 1. `$CLAUDE_MODEL` env var (explicit override)
