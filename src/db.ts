@@ -1,8 +1,32 @@
-import Database from 'better-sqlite3';
+import type Database from 'better-sqlite3';
 import { mkdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { Note, SearchHit, VaultModel } from './types.js';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * Lazily load the better-sqlite3 native module so a missing/unbuilt binding
+ * fails with an actionable message instead of an opaque import-time crash.
+ */
+let DatabaseCtor: typeof import('better-sqlite3') | undefined;
+function loadDatabase(): typeof import('better-sqlite3') {
+  if (!DatabaseCtor) {
+    try {
+      DatabaseCtor = require('better-sqlite3') as typeof import('better-sqlite3');
+    } catch (e) {
+      throw new Error(
+        'vault-brain: failed to load the better-sqlite3 native module. ' +
+          'Run `npm rebuild better-sqlite3` (needs Python 3 + a C/C++ toolchain), ' +
+          'or reinstall with `npm ci`. Original error: ' +
+          (e as Error).message,
+      );
+    }
+  }
+  return DatabaseCtor;
+}
 
 export interface IndexStats {
   total: number;
@@ -40,9 +64,10 @@ export function createSchema(db: Database.Database): void {
 
 /** Open (or create) the vault's SQLite index at <vaultRoot>/.brain/vault-brain.sqlite. */
 export function openDb(vaultRoot: string): Database.Database {
+  const DB = loadDatabase();
   const dbPath = path.join(vaultRoot, '.brain', 'vault-brain.sqlite');
   mkdirSync(path.dirname(dbPath), { recursive: true });
-  const db = new Database(dbPath);
+  const db = new DB(dbPath);
   db.pragma('journal_mode = WAL');
   createSchema(db);
   return db;

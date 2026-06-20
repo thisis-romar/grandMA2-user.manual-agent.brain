@@ -29,17 +29,29 @@ Working today, no external services required:
 Roadmap (next): **P2** embeddings + `sqlite-vec` hybrid retrieval · **P3** richer MCP
 surface · **P4** memory audit (git) · **P5** multi-vault.
 
+## Requirements
+
+- **Node.js 20+** (CI runs 22 LTS; see `.nvmrc` — `nvm use` picks it up).
+- A C/C++ toolchain + Python 3 for the `better-sqlite3` native build. On a fresh clone,
+  `npm ci` builds it automatically; if the native module fails to load later, run
+  `npm rebuild better-sqlite3`.
+- The real vault ships as a git submodule. After cloning:
+
+  ```bash
+  git submodule update --init --recursive
+  ```
+
 ## Use
 
 ```bash
-npm install
+npm ci                         # installs deps + builds better-sqlite3
 npm test                       # node --test via tsx
 npm run index   examples/sample-vault
 npm run query   examples/sample-vault -- store a preset
 npm run serve   examples/sample-vault        # MCP server over stdio
 
-# point it at the real vault (clone it alongside this repo):
-npm run index   ../grandma2-manual-vault
+# point it at the real grandMA2 vault (vendored as a submodule):
+npm run index   vendor/grandma2-manual-vault
 ```
 
 ### Wire into Claude Code

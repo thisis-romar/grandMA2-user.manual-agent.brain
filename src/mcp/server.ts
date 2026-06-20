@@ -1,5 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import Database from 'better-sqlite3';
+import type Database from 'better-sqlite3';
 import { z } from 'zod';
 import type { Note, VaultModel } from '../types.js';
 import { search } from '../retrieve.js';
