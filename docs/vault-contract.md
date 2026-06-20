@@ -10,12 +10,17 @@ a connector, writing a research agent, or adding a second vault.
 
 **Format**: Obsidian-style Markdown + YAML frontmatter
 **Wikilink style**: `[[Path/Note]]` and `[[Path/Note|alias]]` (path-qualified from vault root)
-**ID field**: `slug` — stable, kebab-style canonical identifier per note (e.g. `key_remote_control_telnet`)
+**ID field**: `slug` — stable, snake_case canonical identifier per note (e.g. `key_remote_control_telnet`)
 **Content type**: Curated notes — not raw manual HTML, not embeddings. Each note is a
 human-edited Markdown page derived from the [MA Lighting help site](https://help.malighting.com/grandMA2/en/help/)
 with resolved cross-links, added `summary` frontmatter, and typed wikilink relations.
 
 Manifest lives at: `.brain/manifest.yaml` (machine-readable schema contract).
+
+**Schema version**: the manifest declares `spec_version` (currently `1`). The engine
+validates it on load — a manifest with a different `spec_version` is rejected rather than
+parsed against the wrong contract. Omitting the field is allowed (treated as the current
+version). Bump it only when this contract changes incompatibly.
 
 ---
 
@@ -83,7 +88,7 @@ depth: 2
 type: keyword
 slug: key_keyword_<name>
 keyword: Store
-keyword_type: Object        # Object | Function | Helping | Attribute | Special
+keyword_type: function      # function | object | helping | special-char
 related_key: "[[Keys/Store Key.md]]"
 summary: "..."
 

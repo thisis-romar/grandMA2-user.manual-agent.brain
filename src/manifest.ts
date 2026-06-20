@@ -17,10 +17,19 @@ export async function loadManifest(vaultRoot: string): Promise<Manifest> {
   return m;
 }
 
-/** Throw if the manifest is missing required sections. */
+/** The manifest schema version this engine understands. */
+export const SUPPORTED_SPEC_VERSION = 1;
+
+/** Throw if the manifest is missing required sections or declares an unsupported version. */
 export function validateManifest(m: Manifest): void {
   for (const k of ['vault', 'links', 'taxonomy', 'frontmatter'] as const) {
     if (!m || !m[k]) throw new Error(`manifest missing required section "${k}"`);
+  }
+  // spec_version is optional, but if present it must match what we support.
+  if (m.spec_version != null && m.spec_version !== SUPPORTED_SPEC_VERSION) {
+    throw new Error(
+      `unsupported manifest spec_version ${m.spec_version} (this engine supports ${SUPPORTED_SPEC_VERSION})`,
+    );
   }
   if (!m.links.id_field) throw new Error('manifest.links.id_field is required');
   if (!m.taxonomy.folders || Object.keys(m.taxonomy.folders).length === 0) {
