@@ -1,4 +1,5 @@
 # shellcheck shell=sh
+# shellcheck disable=SC2034  # PROV_* are set here for sourcing callers, not used in-file
 # Resolve the AI authoring context (model + provenance) into shell variables.
 # SOURCE this file (do not execute it); it sets:
 #
