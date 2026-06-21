@@ -31,6 +31,8 @@ test('eval: in-memory keyword search recalls every golden answer', async () => {
     assert.ok(r.mrr > 0);
   }
   assert.equal(report.mean_recall, 1);
+  // Graph enrichment: queries with expected_parent resolve it on the top hit.
+  assert.equal(report.enrichment_rate, 1);
 });
 
 test('eval: DB-backed FTS recalls every golden answer', async () => {
@@ -73,5 +75,12 @@ test('eval: vendor vault meets the retrieval baseline (FTS + in-memory)', { skip
   const mem = evalVault(model, undefined, VENDOR_GOLDEN);
   assert.ok(mem.mean_recall >= 0.8, `in-memory mean_recall ${mem.mean_recall} < 0.8`);
   assert.ok(mem.mean_mrr >= 0.7, `in-memory mean_mrr ${mem.mean_mrr} < 0.7`);
+
+  // Graph enrichment (the differentiator over plain FTS): top page hits resolve
+  // their parent section. Measured 1.0; gate above total breakage.
+  assert.ok(
+    (fts.enrichment_rate ?? 0) >= 0.5,
+    `FTS enrichment_rate ${fts.enrichment_rate} < 0.5`,
+  );
 });
 

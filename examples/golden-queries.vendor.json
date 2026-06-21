@@ -3,12 +3,12 @@
   { "query": "preset stored settings of parameters", "expected_ids": ["key_keyword_preset", "key_presets"], "k": 5 },
   { "query": "cue object holding a look on stage", "expected_ids": ["key_keyword_cue", "key_cues_and_sequences"], "k": 5 },
   { "query": "sequence keyword selfix", "expected_ids": ["key_keyword_sequence"], "k": 3 },
-  { "query": "remote control via telnet", "expected_ids": ["key_keyword_telnet", "key_remote_control_telnet"], "k": 5 },
+  { "query": "remote control via telnet", "expected_ids": ["key_keyword_telnet", "key_remote_control_telnet"], "k": 5, "expected_parent": "key_remote_control" },
   { "query": "executor control handle for objects", "expected_ids": ["key_keyword_executor"], "k": 5 },
   { "query": "group collection of fixtures", "expected_ids": ["key_keyword_group"], "k": 5 },
   { "query": "fixture access with a fixture id", "expected_ids": ["key_keyword_fixture"], "k": 5 },
   { "query": "macro object keyword access macros", "expected_ids": ["key_keyword_macro", "key_macro_what_are"], "k": 5 },
   { "query": "layout of fixtures and objects", "expected_ids": ["key_keyword_layout"], "k": 5 },
-  { "query": "universe pool 256 universes", "expected_ids": ["key_patch_universe_pool"], "k": 5 },
+  { "query": "universe pool 256 universes", "expected_ids": ["key_patch_universe_pool"], "k": 5, "expected_parent": "key_patch" },
   { "query": "store the first cue quick start", "expected_ids": ["key_06_store_the_first_cue"], "k": 5 }
 ]
