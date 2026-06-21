@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadVault } from '../src/vault.js';
-import { relations } from '../src/graph.js';
+import { ancestry, relations } from '../src/graph.js';
 
 const SAMPLE_VAULT = path.join(fileURLToPath(import.meta.url), '../../examples/sample-vault');
 // sample manifest: relations.section_ref = { from: page, to: section, kind: parent }
@@ -35,4 +35,15 @@ test('relations honors the kind filter', async () => {
 test('relations on an unknown id returns empty', async () => {
   const model = await loadVault(SAMPLE_VAULT);
   assert.deepEqual(relations(model, 'Does/Not/Exist'), []);
+});
+
+test('ancestry walks the parent chain (page -> section)', async () => {
+  const model = await loadVault(SAMPLE_VAULT);
+  const chain = ancestry(model, PAGE).map((n) => n.path);
+  assert.deepEqual(chain, [SECTION], `expected [${SECTION}], got ${JSON.stringify(chain)}`);
+});
+
+test('ancestry on a root note (no parent) is empty', async () => {
+  const model = await loadVault(SAMPLE_VAULT);
+  assert.deepEqual(ancestry(model, SECTION), []);
 });

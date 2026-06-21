@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
-import { createSchema, indexVault, searchFts } from '../src/db.js';
+import { createSchema, indexVault, searchFts, searchSections } from '../src/db.js';
 import { loadVault } from '../src/vault.js';
 
 const SAMPLE_VAULT = path.join(fileURLToPath(import.meta.url), '../../examples/sample-vault');
@@ -35,6 +35,23 @@ test('FTS5 search finds relevant note for "store preset"', async () => {
     titles.some((t) => t.includes('store') || t.includes('preset')),
     `expected store/preset in titles, got: ${titles.join(', ')}`,
   );
+  db.close();
+});
+
+test('FTS search tolerates punctuation-heavy queries and zero results', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  // grandMA2 commands are punctuation-heavy; raw FTS5 MATCH would throw on these.
+  // buildFtsQuery strips operators, so the call must return an array, never throw.
+  for (const q of ['store /global preset; at 100', '"unterminated', 'a - b OR* (']) {
+    const hits = searchFts(db, q, 5);
+    assert.ok(Array.isArray(hits), `expected array for ${JSON.stringify(q)}`);
+  }
+  // A query with no alphanumeric tokens yields no results (not an error).
+  assert.deepEqual(searchFts(db, '/// --- ;;;', 5), []);
+  // A well-formed query that matches nothing returns [].
+  assert.deepEqual(searchFts(db, 'zzzznotapresentterm', 5), []);
   db.close();
 });
 
@@ -71,6 +88,47 @@ test('reindex prunes notes removed from the vault', async () => {
   assert.equal(count('SELECT COUNT(*) c FROM notes WHERE id = ?', dropped.id), 0);
   assert.equal(count('SELECT COUNT(*) c FROM notes_fts WHERE id = ?', dropped.id), 0);
   assert.equal(count('SELECT COUNT(*) c FROM links WHERE source_id = ?', dropped.id), 0);
+  db.close();
+});
+
+test('indexVault populates chunks and searchSections finds a section', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  const chunkCount = (db.prepare('SELECT COUNT(*) c FROM chunks').get() as { c: number }).c;
+  assert.ok(chunkCount >= vault.notes.length, `expected >=${vault.notes.length} chunks, got ${chunkCount}`);
+  const hits = searchSections(db, 'store', 5, vault.manifest.retrieval?.exclude_types ?? []);
+  assert.ok(hits.length > 0, 'expected a section hit for "store"');
+  assert.ok(
+    hits.some((h) => h.path === 'Keywords/Store'),
+    `expected a Keywords/Store section, got ${hits.map((h) => h.path).join(', ')}`,
+  );
+  db.close();
+});
+
+test('reindex prunes chunks for removed notes', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  const dropped = vault.notes[0];
+  indexVault({ ...vault, notes: vault.notes.slice(1) }, db);
+  const left = (
+    db.prepare('SELECT COUNT(*) c FROM chunks WHERE note_id = ?').get(dropped.id) as { c: number }
+  ).c;
+  assert.equal(left, 0, 'chunks for the removed note should be pruned');
+  db.close();
+});
+
+test('searchFts honors includeTypes (facet filter)', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  const hits = searchFts(db, 'preset', 20, [], ['section']);
+  assert.ok(hits.length > 0, 'expected at least one section hit for "preset"');
+  const byPath = new Map(vault.notes.map((n) => [n.path, n.type]));
+  for (const h of hits) {
+    assert.equal(byPath.get(h.path), 'section', `expected only section hits, got ${h.path}`);
+  }
   db.close();
 });
 

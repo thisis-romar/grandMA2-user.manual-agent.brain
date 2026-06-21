@@ -1,8 +1,33 @@
-import Database from 'better-sqlite3';
+import type Database from 'better-sqlite3';
 import { mkdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
 import path from 'node:path';
-import type { Note, SearchHit, VaultModel } from './types.js';
+import type { Note, SearchHit, SectionHit, VaultModel } from './types.js';
+import { chunkBody } from './chunk.js';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * Lazily load the better-sqlite3 native module so a missing/unbuilt binding
+ * fails with an actionable message instead of an opaque import-time crash.
+ */
+let DatabaseCtor: typeof import('better-sqlite3') | undefined;
+function loadDatabase(): typeof import('better-sqlite3') {
+  if (!DatabaseCtor) {
+    try {
+      DatabaseCtor = require('better-sqlite3') as typeof import('better-sqlite3');
+    } catch (e) {
+      throw new Error(
+        'vault-brain: failed to load the better-sqlite3 native module. ' +
+          'Run `npm rebuild better-sqlite3` (needs Python 3 + a C/C++ toolchain), ' +
+          'or reinstall with `npm ci`. Original error: ' +
+          (e as Error).message,
+      );
+    }
+  }
+  return DatabaseCtor;
+}
 
 export interface IndexStats {
   total: number;
@@ -35,14 +60,32 @@ export function createSchema(db: Database.Database): void {
       body,
       tokenize = 'unicode61'
     );
+    CREATE TABLE IF NOT EXISTS chunks (
+      id      TEXT PRIMARY KEY,
+      note_id TEXT NOT NULL,
+      heading TEXT,
+      anchor  TEXT,
+      level   INTEGER,
+      ord     INTEGER,
+      body    TEXT
+    );
+    CREATE INDEX IF NOT EXISTS chunks_note_idx ON chunks(note_id);
+    CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
+      id      UNINDEXED,
+      note_id UNINDEXED,
+      heading,
+      body,
+      tokenize = 'unicode61'
+    );
   `);
 }
 
 /** Open (or create) the vault's SQLite index at <vaultRoot>/.brain/vault-brain.sqlite. */
 export function openDb(vaultRoot: string): Database.Database {
+  const DB = loadDatabase();
   const dbPath = path.join(vaultRoot, '.brain', 'vault-brain.sqlite');
   mkdirSync(path.dirname(dbPath), { recursive: true });
-  const db = new Database(dbPath);
+  const db = new DB(dbPath);
   db.pragma('journal_mode = WAL');
   createSchema(db);
   return db;
@@ -64,6 +107,10 @@ interface WriteStmts {
   insertFts: Database.Statement;
   deleteLinks: Database.Statement;
   insertLink: Database.Statement;
+  deleteChunks: Database.Statement;
+  deleteChunksFts: Database.Statement;
+  insertChunk: Database.Statement;
+  insertChunkFts: Database.Statement;
 }
 
 function writeStmts(db: Database.Database): WriteStmts {
@@ -82,11 +129,19 @@ function writeStmts(db: Database.Database): WriteStmts {
     insertFts: db.prepare('INSERT INTO notes_fts (id, title, summary, body) VALUES (?, ?, ?, ?)'),
     deleteLinks: db.prepare('DELETE FROM links WHERE source_id = ?'),
     insertLink: db.prepare('INSERT OR IGNORE INTO links (source_id, target_id) VALUES (?, ?)'),
+    deleteChunks: db.prepare('DELETE FROM chunks WHERE note_id = ?'),
+    deleteChunksFts: db.prepare('DELETE FROM chunks_fts WHERE note_id = ?'),
+    insertChunk: db.prepare(
+      'INSERT OR REPLACE INTO chunks (id, note_id, heading, anchor, level, ord, body) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    ),
+    insertChunkFts: db.prepare(
+      'INSERT INTO chunks_fts (id, note_id, heading, body) VALUES (?, ?, ?, ?)',
+    ),
   };
 }
 
-/** Write one note's row + FTS + links if its file hash changed. Returns true if written. */
-function writeOne(s: WriteStmts, vaultRoot: string, n: Note): boolean {
+/** Write one note's row + FTS + links (+ section chunks) if its file hash changed. */
+function writeOne(s: WriteStmts, vaultRoot: string, n: Note, doChunk: boolean): boolean {
   const hash = fileHash(path.join(vaultRoot, n.file));
   const existing = s.getNote.get(n.id);
   if (existing?.file_hash === hash) return false;
@@ -95,6 +150,14 @@ function writeOne(s: WriteStmts, vaultRoot: string, n: Note): boolean {
   s.insertFts.run(n.id, n.title ?? '', n.summary ?? '', n.body ?? '');
   s.deleteLinks.run(n.id);
   for (const target of n.outlinks) s.insertLink.run(n.id, target);
+  s.deleteChunks.run(n.id);
+  s.deleteChunksFts.run(n.id);
+  if (doChunk) {
+    for (const c of chunkBody(n.id, n.body ?? '')) {
+      s.insertChunk.run(c.id, c.noteId, c.heading, c.anchor, c.level, c.ord, c.body);
+      s.insertChunkFts.run(c.id, c.noteId, c.heading, c.body);
+    }
+  }
   return true;
 }
 
@@ -105,12 +168,13 @@ function writeOne(s: WriteStmts, vaultRoot: string, n: Note): boolean {
 export function indexVault(vault: VaultModel, db: Database.Database): IndexStats {
   const s = writeStmts(db);
   const allIds = db.prepare<[], { id: string }>('SELECT id FROM notes');
+  const doChunk = vault.manifest.retrieval?.chunk === 'by-heading';
   let updated = 0;
   let removed = 0;
 
   const tx = db.transaction((notes: Note[]) => {
     for (const n of notes) {
-      if (writeOne(s, vault.root, n)) updated++;
+      if (writeOne(s, vault.root, n, doChunk)) updated++;
     }
     // prune: delete rows for ids no longer present in the vault
     const present = new Set(notes.map((n) => n.id));
@@ -118,6 +182,8 @@ export function indexVault(vault: VaultModel, db: Database.Database): IndexStats
       if (!present.has(id)) {
         s.deleteFts.run(id);
         s.deleteLinks.run(id);
+        s.deleteChunks.run(id);
+        s.deleteChunksFts.run(id);
         db.prepare('DELETE FROM notes WHERE id = ?').run(id);
         removed++;
       }
@@ -131,9 +197,14 @@ export function indexVault(vault: VaultModel, db: Database.Database): IndexStats
 }
 
 /** Upsert a single note into the index (used by memory write-back). */
-export function upsertNote(db: Database.Database, vaultRoot: string, note: Note): void {
+export function upsertNote(
+  db: Database.Database,
+  vaultRoot: string,
+  note: Note,
+  doChunk = false,
+): void {
   const s = writeStmts(db);
-  db.transaction(() => writeOne(s, vaultRoot, note))();
+  db.transaction(() => writeOne(s, vaultRoot, note, doChunk))();
 }
 
 function buildFtsQuery(raw: string): string {
@@ -148,6 +219,7 @@ export function searchFts(
   query: string,
   k: number,
   excludeTypes: string[] = [],
+  includeTypes: string[] = [],
 ): SearchHit[] {
   const q = buildFtsQuery(query);
   if (!q) return [];
@@ -156,22 +228,75 @@ export function searchFts(
     const exFilter = excludeTypes.length
       ? `AND n.type NOT IN (${excludeTypes.map(() => '?').join(', ')})`
       : '';
+    const inFilter = includeTypes.length
+      ? `AND n.type IN (${includeTypes.map(() => '?').join(', ')})`
+      : '';
     const rows = db
       .prepare(`
         SELECT n.id, n.path, n.title, n.summary, bm25(notes_fts) AS rank
         FROM notes_fts
         JOIN notes n ON n.id = notes_fts.id
-        WHERE notes_fts MATCH ? ${exFilter}
+        WHERE notes_fts MATCH ? ${exFilter} ${inFilter}
         ORDER BY rank
         LIMIT ?
       `)
-      .all(q, ...excludeTypes, k) as Row[];
+      .all(q, ...excludeTypes, ...includeTypes, k) as Row[];
     return rows.map((r) => ({
       id: r.id,
       path: r.path,
       title: r.title ?? r.id,
       score: Math.round(-r.rank * 100) / 100,
       snippet: r.summary || '',
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/** Section-level full-text search over heading chunks (BM25). Falls back to [] on errors. */
+export function searchSections(
+  db: Database.Database,
+  query: string,
+  k: number,
+  excludeTypes: string[] = [],
+): SectionHit[] {
+  const q = buildFtsQuery(query);
+  if (!q) return [];
+  try {
+    type Row = {
+      id: string;
+      note_id: string;
+      heading: string;
+      anchor: string;
+      body: string;
+      path: string;
+      note_title: string;
+      rank: number;
+    };
+    const exFilter = excludeTypes.length
+      ? `AND n.type NOT IN (${excludeTypes.map(() => '?').join(', ')})`
+      : '';
+    const rows = db
+      .prepare(`
+        SELECT c.id, c.note_id, c.heading, c.anchor, c.body,
+               n.path, n.title AS note_title, bm25(chunks_fts) AS rank
+        FROM chunks_fts
+        JOIN chunks c ON c.id = chunks_fts.id
+        JOIN notes n ON n.id = c.note_id
+        WHERE chunks_fts MATCH ? ${exFilter}
+        ORDER BY rank
+        LIMIT ?
+      `)
+      .all(q, ...excludeTypes, k) as Row[];
+    return rows.map((r) => ({
+      id: r.id,
+      noteId: r.note_id,
+      path: r.path,
+      noteTitle: r.note_title ?? r.note_id,
+      heading: r.heading ?? '',
+      anchor: r.anchor ?? '',
+      score: Math.round(-r.rank * 100) / 100,
+      snippet: (r.body ?? '').slice(0, 200),
     }));
   } catch {
     return [];

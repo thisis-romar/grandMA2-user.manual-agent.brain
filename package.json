@@ -1,6 +1,6 @@
 {
   "name": "vault-brain",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Vault-agnostic agent brain: turns a spec-conforming Obsidian vault into an MCP knowledge server (retrieval + graph + memory). Repo: grandMA2-user.manual-agent.brain.",
   "type": "module",
@@ -15,6 +15,7 @@
     "index": "tsx src/cli.ts index",
     "query": "tsx src/cli.ts query",
     "serve": "tsx src/cli.ts serve",
+    "eval": "tsx src/cli.ts eval",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky"

@@ -4,18 +4,28 @@ This document describes the interface between **vault-brain** (this engine) and
 its primary consumer vault, `grandma2-manual-vault`. Read it if you're wiring
 a connector, writing a research agent, or adding a second vault.
 
+> **The engine is vault-agnostic.** vault-brain has no grandMA2-specific code — folder
+> taxonomy, note types, id field, and retrieval policy all come from a vault's own
+> `.brain/manifest.yaml`. This file is *one vault's instance* of that generic contract;
+> a second vault supplies its own manifest and the same engine serves it unchanged.
+
 ---
 
 ## Content format
 
 **Format**: Obsidian-style Markdown + YAML frontmatter
 **Wikilink style**: `[[Path/Note]]` and `[[Path/Note|alias]]` (path-qualified from vault root)
-**ID field**: `slug` — stable, kebab-style canonical identifier per note (e.g. `key_remote_control_telnet`)
+**ID field**: `slug` — stable, snake_case canonical identifier per note (e.g. `key_remote_control_telnet`)
 **Content type**: Curated notes — not raw manual HTML, not embeddings. Each note is a
 human-edited Markdown page derived from the [MA Lighting help site](https://help.malighting.com/grandMA2/en/help/)
 with resolved cross-links, added `summary` frontmatter, and typed wikilink relations.
 
 Manifest lives at: `.brain/manifest.yaml` (machine-readable schema contract).
+
+**Schema version**: the manifest declares `spec_version` (currently `1`). The engine
+validates it on load — a manifest with a different `spec_version` is rejected rather than
+parsed against the wrong contract. Omitting the field is allowed (treated as the current
+version). Bump it only when this contract changes incompatibly.
 
 ---
 
@@ -43,6 +53,8 @@ Manifest lives at: `.brain/manifest.yaml` (machine-readable schema contract).
 | Cue/sequence command pages | `Pages/Cues and Sequences/` and `Pages/Advanced Sequence Functionality/` |
 
 Focused machine-readable index: [`docs/index/commands-index.json`](index/commands-index.json)
+(optional grandMA2 reference artifact — the engine does **not** load it; see
+[`docs/index/README.md`](index/README.md))
 
 ---
 
@@ -61,6 +73,8 @@ Focused machine-readable index: [`docs/index/commands-index.json`](index/command
 | MA NDPs / Network Switch / xPort | `Pages/Control MA NDPs/`, `Pages/Control MA Network Switch/`, `Pages/Control MA xPort Nodes/` |
 
 Focused machine-readable index: [`docs/index/networking-index.json`](index/networking-index.json)
+(optional grandMA2 reference artifact — the engine does **not** load it; see
+[`docs/index/README.md`](index/README.md))
 
 ---
 
@@ -83,7 +97,9 @@ depth: 2
 type: keyword
 slug: key_keyword_<name>
 keyword: Store
-keyword_type: Object        # Object | Function | Helping | Attribute | Special
+keyword_type: unknown       # CURRENT DATA: all keyword notes are "unknown".
+                            # Intended vocabulary (not yet populated by the
+                            # extractor): function | object | helping | special-char
 related_key: "[[Keys/Store Key.md]]"
 summary: "..."
 

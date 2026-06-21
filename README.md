@@ -17,29 +17,65 @@ Working today, no external services required:
 
 - **Manifest** loader + validator (`src/manifest.ts`).
 - **Vault model**: frontmatter + `[[wikilink]]` graph + typed relations (`src/vault.ts`).
-- **Retrieval**: SQLite **FTS5** full-text search (BM25), with in-memory keyword
-  fallback when no index exists (`src/db.ts`, `src/retrieve.ts`).
+- **Retrieval**: SQLite **FTS5** full-text search (BM25) at note **and section** level
+  (heading chunks, `chunk: by-heading`), with in-memory keyword fallback when no index
+  exists (`src/db.ts`, `src/retrieve.ts`, `src/chunk.ts`).
 - **Index**: persistent SQLite at `<vault>/.brain/vault-brain.sqlite` with incremental
-  reindex by file hash (`src/db.ts`).
+  reindex by file hash; notes + section chunks (`src/db.ts`).
 - **Graph**: `neighbours` / `backlinks` / `related` (`src/graph.ts`).
 - **Memory**: validated note write-back (`src/memory.ts`).
 - **MCP server** over stdio exposing all tools via `registerTool` (`src/mcp/server.ts`).
-- **CLI**: `index` / `query` / `serve` (`src/cli.ts`).
+- **CLI**: `index` / `query` / `serve` / `eval` (`src/cli.ts`).
+- **Eval harness** (`src/eval.ts`): scores a golden query set with recall@k + MRR over any
+  retriever (in-memory or SQLite/FTS, note- or section-level) — a regression gate for retrieval.
 
 Roadmap (next): **P2** embeddings + `sqlite-vec` hybrid retrieval · **P3** richer MCP
 surface · **P4** memory audit (git) · **P5** multi-vault.
 
+## Requirements
+
+- **Node.js 20+** (CI runs 22 LTS; see `.nvmrc` — `nvm use` picks it up).
+- A C/C++ toolchain + Python 3 for the `better-sqlite3` native build. On a fresh clone,
+  `npm ci` builds it automatically; if the native module fails to load later, run
+  `npm rebuild better-sqlite3`.
+- The real vault ships as a git submodule. After cloning:
+
+  ```bash
+  git submodule update --init --recursive
+  ```
+
 ## Use
 
 ```bash
-npm install
+npm ci                         # installs deps + builds better-sqlite3
 npm test                       # node --test via tsx
 npm run index   examples/sample-vault
 npm run query   examples/sample-vault -- store a preset
 npm run serve   examples/sample-vault        # MCP server over stdio
 
-# point it at the real vault (clone it alongside this repo):
-npm run index   ../grandma2-manual-vault
+# point it at the real grandMA2 vault (vendored as a submodule):
+npm run index   vendor/grandma2-manual-vault
+
+# score retrieval quality against a golden query set (recall@k + MRR):
+npm run eval    examples/sample-vault examples/golden-queries.json          # in-memory
+npm run eval    examples/sample-vault examples/golden-queries.json -- --db  # SQLite/FTS
+npm run eval    vendor/grandma2-manual-vault examples/golden-queries.vendor.json -- --db
+```
+
+### Updating the vendored vault & re-indexing
+
+```bash
+git submodule update --remote vendor/grandma2-manual-vault   # pull latest vault content
+npm run index vendor/grandma2-manual-vault                   # re-index (incremental)
+```
+
+Indexing is **incremental**: notes are hashed, so a re-index only touches changed/added/removed
+notes. The index lives at `<vault>/.brain/vault-brain.sqlite` (git-ignored). For a clean
+rebuild, delete it first:
+
+```bash
+rm vendor/grandma2-manual-vault/.brain/vault-brain.sqlite*
+npm run index vendor/grandma2-manual-vault
 ```
 
 ### Wire into Claude Code
@@ -50,14 +86,24 @@ claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/va
 
 ## MCP tools
 
-`search(query,k?)` · `get_note(id)` · `neighbours(id,depth?)` · `backlinks(id)` ·
-`related(id,k?)` · `relations(id,kind?)` · `write_note(type,title,body,summary?,links?)` ·
+`search(query,k?,type?)` · `search_with_context(query,k?,type?)` · `search_sections(query,k?)` ·
+`get_note(id)` · `neighbours(id,depth?)` · `backlinks(id)` · `related(id,k?)` ·
+`relations(id,kind?)` · `list_facets(field?)` · `write_note(type,title,body,summary?,links?)` ·
 `list_vaults()`
 
+`search` returns hits enriched with a **breadcrumb** (ancestor section titles) and a
+query-focused, highlighted **snippet**; `type` narrows to one note type (see `list_facets`).
+`search_with_context` adds each hit's surrounding graph (parent, prev/next, cross-refs,
+related, backlinks) in one call, to avoid follow-up `neighbours`/`relations` round-trips.
+`search_sections` searches **heading-level chunks** (the manifest's `chunk: by-heading`) and
+returns the most relevant section of a note; `get_note(id#anchor)` then fetches just that
+section (a plain `get_note(id)` lists the note's section anchors).
 `relations` walks the manifest's typed edges (parent/child section, prev/next page,
 cross-refs) in both directions — distinct from `neighbours`, which follows inline wikilinks.
 
-See `AGENTS.md` for the agent tool-priority contract.
+See `AGENTS.md` for the agent tool-priority contract. Claude Code users also get a
+model-invoked skill at `.claude/skills/vault-brain-retrieval/` that teaches the same
+search → expand → cite workflow on demand.
 
 ## Bundled MCP servers (`.mcp.json`)
 

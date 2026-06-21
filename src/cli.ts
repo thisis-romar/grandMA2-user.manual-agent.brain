@@ -1,12 +1,13 @@
-import { existsSync } from 'node:fs';
+import { existsSync, promises as fs } from 'node:fs';
 import path from 'node:path';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { loadVault } from './vault.js';
 import { search } from './retrieve.js';
 import { buildServer } from './mcp/server.js';
 import { openDb, indexVault, searchFts } from './db.js';
+import { evalVault, type GoldenQuery } from './eval.js';
 
-const USAGE = 'usage: brain <index|query|serve> <vault-root> [query...]';
+const USAGE = 'usage: brain <index|query|serve|eval> <vault-root> [args...]';
 
 async function main(): Promise<void> {
   const [cmd, ...rest] = process.argv.slice(2);
@@ -56,6 +57,26 @@ async function main(): Promise<void> {
     console.error(
       `vault-brain serving "${model.manifest.vault.name}" (${model.notes.length} notes, FTS: ${db ? 'on' : 'off'}) over stdio`,
     );
+    return;
+  }
+
+  if (cmd === 'eval') {
+    const root = rest[0];
+    const queryFile = rest.find((a, i) => i >= 1 && !a.startsWith('--'));
+    if (!root || !queryFile) {
+      console.error('usage: brain eval <vault-root> <golden-queries.json> [--db] [--sections]');
+      process.exit(2);
+    }
+    const queries = JSON.parse(await fs.readFile(queryFile, 'utf8')) as GoldenQuery[];
+    const model = await loadVault(root);
+    let db;
+    if (rest.includes('--db')) {
+      db = openDb(root);
+      indexVault(model, db);
+    }
+    const report = evalVault(model, db, queries, { sections: rest.includes('--sections') });
+    db?.close();
+    console.log(JSON.stringify(report, null, 2));
     return;
   }
 

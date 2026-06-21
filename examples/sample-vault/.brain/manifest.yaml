@@ -15,5 +15,6 @@ frontmatter:
 relations:
   section_ref: { from: page, to: section, kind: parent }
 retrieval:
+  chunk: by-heading
   summary_field: summary
   exclude_types: [moc]

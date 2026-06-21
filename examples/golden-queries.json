@@ -1,0 +1,7 @@
+[
+  { "query": "store a preset", "expected_ids": ["key_keyword_store", "key_presets_create"], "k": 5 },
+  { "query": "store keyword", "expected_ids": ["key_keyword_store"], "k": 5 },
+  { "query": "save data into the show file", "expected_ids": ["key_keyword_store"], "k": 5 },
+  { "query": "create presets", "expected_ids": ["key_presets_create"], "k": 5, "expected_parent": "key_presets" },
+  { "query": "how to create presets in grandMA2", "expected_ids": ["key_presets_create"], "k": 5, "expected_parent": "key_presets" }
+]

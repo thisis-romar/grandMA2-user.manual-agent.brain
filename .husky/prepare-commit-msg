@@ -1,12 +1,20 @@
 #!/bin/sh
 # vault-brain prepare-commit-msg — automatic AI authoring attribution.
 # Appends model + provenance trailers (see scripts/commit-trailers.sh, which
-# builds on scripts/detect-ai-model.sh). Skips if a Co-authored-by already exists
-# (avoids duplication on amend/rebase).
+# builds on scripts/detect-ai-model.sh). Additive: feeds each trailer through
+# `git interpret-trailers --if-exists doNothing`, so it only adds keys that are
+# not already present. In the web/remote harness a Co-Authored-By + Claude-Session
+# may already be injected; this still fills in Generated-with / Claude-Entrypoint
+# without duplicating anything (token match is case-insensitive).
 COMMIT_MSG_FILE=$1
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo .)
-if ! grep -qi "Co-authored-by:" "$COMMIT_MSG_FILE"; then
-  TRAILERS=$(sh "$ROOT/scripts/commit-trailers.sh" 2>/dev/null || true)
-  [ -n "$TRAILERS" ] && printf "\n%s\n" "$TRAILERS" >> "$COMMIT_MSG_FILE"
-fi
+TRAILERS=$(sh "$ROOT/scripts/commit-trailers.sh" 2>/dev/null || true)
+[ -n "$TRAILERS" ] || exit 0
+set --
+while IFS= read -r line; do
+  [ -n "$line" ] && set -- "$@" --trailer "$line"
+done <<EOF
+$TRAILERS
+EOF
+git interpret-trailers --in-place --if-exists doNothing "$@" "$COMMIT_MSG_FILE" 2>/dev/null || true
 exit 0

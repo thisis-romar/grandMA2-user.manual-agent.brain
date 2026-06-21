@@ -8,38 +8,18 @@
 #   Claude-Entrypoint: remote
 #
 # Friendly model name only; the raw model id is never emitted. Degrades silently
-# (prints nothing for a field) outside a Claude Code session.
+# (prints nothing for a field) outside a Claude Code session. Value resolution
+# lives in scripts/lib/provenance.sh, shared with scripts/pr-trailers.sh.
 
 set -u
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo .)
 
-model=$(sh "$ROOT/scripts/detect-ai-model.sh" 2>/dev/null || true)
+# shellcheck source=scripts/lib/provenance.sh
+. "$ROOT/scripts/lib/provenance.sh"
 
-# Locate the live session transcript for fields not exposed as env vars.
-sid="${CLAUDE_CODE_SESSION_ID:-}"
-cfg="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
-transcript=""
-if [ -n "$sid" ] && [ -d "$cfg/projects" ]; then
-  transcript=$(find "$cfg/projects" -name "$sid.jsonl" -type f 2>/dev/null | head -1)
-fi
-from_transcript() { # $1 = json string key -> last value seen
-  [ -n "$transcript" ] || return 0
-  grep -oE "\"$1\":\"[^\"]*\"" "$transcript" 2>/dev/null | tail -1 | sed 's/.*:"//; s/"$//'
-}
-
-# Version: prefer the transcript (actual authoring agent) over the env var.
-version="${CLAUDE_CODE_VERSION:-}"
-tv=$(from_transcript version); [ -n "$tv" ] && version="$tv"
-
-# Entrypoint: env var first, transcript fallback.
-entrypoint="${CLAUDE_CODE_ENTRYPOINT:-}"
-[ -z "$entrypoint" ] && entrypoint=$(from_transcript entrypoint)
-
-session="${CLAUDE_CODE_SESSION_ID:-}"
-
-[ -n "$model" ]      && printf 'Co-authored-by: %s <noreply@anthropic.com>\n' "$model"
-[ -n "$version" ]    && printf 'Generated-with: Claude Code %s\n' "$version"
-[ -n "$session" ]    && printf 'Claude-Session: %s\n' "$session"
-[ -n "$entrypoint" ] && printf 'Claude-Entrypoint: %s\n' "$entrypoint"
+[ -n "$PROV_MODEL" ]      && printf 'Co-authored-by: %s <noreply@anthropic.com>\n' "$PROV_MODEL"
+[ -n "$PROV_VERSION" ]    && printf 'Generated-with: Claude Code %s\n' "$PROV_VERSION"
+[ -n "$PROV_SESSION" ]    && printf 'Claude-Session: %s\n' "$PROV_SESSION"
+[ -n "$PROV_ENTRYPOINT" ] && printf 'Claude-Entrypoint: %s\n' "$PROV_ENTRYPOINT"
 
 exit 0
