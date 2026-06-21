@@ -4,6 +4,11 @@ This document describes the interface between **vault-brain** (this engine) and
 its primary consumer vault, `grandma2-manual-vault`. Read it if you're wiring
 a connector, writing a research agent, or adding a second vault.
 
+> **The engine is vault-agnostic.** vault-brain has no grandMA2-specific code — folder
+> taxonomy, note types, id field, and retrieval policy all come from a vault's own
+> `.brain/manifest.yaml`. This file is *one vault's instance* of that generic contract;
+> a second vault supplies its own manifest and the same engine serves it unchanged.
+
 ---
 
 ## Content format
@@ -48,6 +53,8 @@ version). Bump it only when this contract changes incompatibly.
 | Cue/sequence command pages | `Pages/Cues and Sequences/` and `Pages/Advanced Sequence Functionality/` |
 
 Focused machine-readable index: [`docs/index/commands-index.json`](index/commands-index.json)
+(optional grandMA2 reference artifact — the engine does **not** load it; see
+[`docs/index/README.md`](index/README.md))
 
 ---
 
@@ -66,6 +73,8 @@ Focused machine-readable index: [`docs/index/commands-index.json`](index/command
 | MA NDPs / Network Switch / xPort | `Pages/Control MA NDPs/`, `Pages/Control MA Network Switch/`, `Pages/Control MA xPort Nodes/` |
 
 Focused machine-readable index: [`docs/index/networking-index.json`](index/networking-index.json)
+(optional grandMA2 reference artifact — the engine does **not** load it; see
+[`docs/index/README.md`](index/README.md))
 
 ---
 
@@ -88,7 +97,9 @@ depth: 2
 type: keyword
 slug: key_keyword_<name>
 keyword: Store
-keyword_type: function      # function | object | helping | special-char
+keyword_type: unknown       # CURRENT DATA: all keyword notes are "unknown".
+                            # Intended vocabulary (not yet populated by the
+                            # extractor): function | object | helping | special-char
 related_key: "[[Keys/Store Key.md]]"
 summary: "..."
 

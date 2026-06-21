@@ -59,6 +59,23 @@ npm run index   vendor/grandma2-manual-vault
 # score retrieval quality against a golden query set (recall@k + MRR):
 npm run eval    examples/sample-vault examples/golden-queries.json          # in-memory
 npm run eval    examples/sample-vault examples/golden-queries.json -- --db  # SQLite/FTS
+npm run eval    vendor/grandma2-manual-vault examples/golden-queries.vendor.json -- --db
+```
+
+### Updating the vendored vault & re-indexing
+
+```bash
+git submodule update --remote vendor/grandma2-manual-vault   # pull latest vault content
+npm run index vendor/grandma2-manual-vault                   # re-index (incremental)
+```
+
+Indexing is **incremental**: notes are hashed, so a re-index only touches changed/added/removed
+notes. The index lives at `<vault>/.brain/vault-brain.sqlite` (git-ignored). For a clean
+rebuild, delete it first:
+
+```bash
+rm vendor/grandma2-manual-vault/.brain/vault-brain.sqlite*
+npm run index vendor/grandma2-manual-vault
 ```
 
 ### Wire into Claude Code
