@@ -38,6 +38,23 @@ test('FTS5 search finds relevant note for "store preset"', async () => {
   db.close();
 });
 
+test('FTS search tolerates punctuation-heavy queries and zero results', async () => {
+  const db = freshDb();
+  const vault = await loadVault(SAMPLE_VAULT);
+  indexVault(vault, db);
+  // grandMA2 commands are punctuation-heavy; raw FTS5 MATCH would throw on these.
+  // buildFtsQuery strips operators, so the call must return an array, never throw.
+  for (const q of ['store /global preset; at 100', '"unterminated', 'a - b OR* (']) {
+    const hits = searchFts(db, q, 5);
+    assert.ok(Array.isArray(hits), `expected array for ${JSON.stringify(q)}`);
+  }
+  // A query with no alphanumeric tokens yields no results (not an error).
+  assert.deepEqual(searchFts(db, '/// --- ;;;', 5), []);
+  // A well-formed query that matches nothing returns [].
+  assert.deepEqual(searchFts(db, 'zzzznotapresentterm', 5), []);
+  db.close();
+});
+
 test('incremental reindex skips unchanged notes', async () => {
   const db = freshDb();
   const vault = await loadVault(SAMPLE_VAULT);
