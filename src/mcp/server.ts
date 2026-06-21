@@ -43,7 +43,7 @@ function enrich(model: VaultModel, query: string, hits: SearchHit[]): SearchHit[
 
 /** Build an MCP server exposing the brain's tools over a loaded vault model. */
 export function buildServer(model: VaultModel, db?: Database.Database): McpServer {
-  const server = new McpServer({ name: 'vault-brain', version: '0.1.0' });
+  const server = new McpServer({ name: 'vault-brain', version: '0.2.0' });
 
   server.registerTool(
     'search',
