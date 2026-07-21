@@ -78,11 +78,41 @@ rm vendor/grandma2-manual-vault/.brain/vault-brain.sqlite*
 npm run index vendor/grandma2-manual-vault
 ```
 
-### Wire into Claude Code
+## Register this MCP (reproducible)
+
+A fresh clone needs **no build artifact** — there is no committed `dist/` and none is
+required. `src/cli.ts` runs directly under `tsx` (a dev dependency), so the two steps below
+work from a clean checkout on any machine with Node 20+:
 
 ```bash
-claude mcp add vault-brain -- npx tsx /abs/path/src/cli.ts serve /abs/path/to/vault
+# 1. from the repo root — installs deps + tsx, builds better-sqlite3 (see Requirements above)
+npm ci
+
+# 2. register the server with Claude Code (run once; path args are ABSOLUTE)
+claude mcp add vault-brain -- npx tsx /ABS/PATH/TO/vault-brain/src/cli.ts serve /ABS/PATH/TO/vault
 ```
+
+The **vault path is a parameter**, not a constant: point the same brain at any
+manifest-conformant OKF vault. For example, to serve the companion
+[`github-projects-manual-vault`](https://github.com/EMBLEM-NLP/github-projects-manual-vault):
+
+```bash
+claude mcp add vault-brain -- \
+  npx tsx /ABS/PATH/TO/vault-brain/src/cli.ts serve /ABS/PATH/TO/github-projects-manual-vault
+```
+
+Notes:
+
+- The CLI subcommand is `serve` and the vault root is its **first positional arg**
+  (`brain serve <vault-root>`; see `src/cli.ts`). On boot it prints, to stderr,
+  `vault-brain serving "<vault name>" (<n> notes, FTS: <on|off>) over stdio`.
+- Use an **absolute path to `src/cli.ts`** so the command is independent of the directory the
+  MCP client launches it from. The relative form `npx tsx src/cli.ts serve <vault>` only works
+  when the process runs from the repo root.
+- FTS is `on` only if the vault has a prebuilt index at `<vault>/.brain/vault-brain.sqlite`
+  (run `npm run index <vault>` first); otherwise the server still boots with an in-memory
+  keyword fallback (`FTS: off`).
+- `claude mcp list` shows the server's state after registration.
 
 ## MCP tools
 
