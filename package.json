@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test test/*.test.ts",
+    "test": "node scripts/run-tests.mjs",
     "index": "tsx src/cli.ts index",
     "query": "tsx src/cli.ts query",
     "serve": "tsx src/cli.ts serve",

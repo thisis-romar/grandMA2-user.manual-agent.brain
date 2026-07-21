@@ -2,7 +2,13 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { loadManifest } from './manifest.js';
-import { parseWikilinks, resolveLink, wikilinkInner, type ResolveMaps } from './links.js';
+import {
+  parseWikilinks,
+  parseCommonMarkLinks,
+  resolveLink,
+  wikilinkInner,
+  type ResolveMaps,
+} from './links.js';
 import type { Manifest, Note, VaultModel } from './types.js';
 
 const IGNORE_DIRS = new Set([
@@ -97,14 +103,28 @@ export async function loadVault(root: string): Promise<VaultModel> {
   }
 
   const backlinks = new Map<string, string[]>();
+  const commonmark = manifest.links.style === 'commonmark';
   for (const n of notes) {
     const seen = new Set<string>();
-    for (const { target } of parseWikilinks(n.body)) {
-      const resolved = resolveLink(target, maps);
-      if (resolved && resolved !== n.path && !seen.has(resolved)) {
-        seen.add(resolved);
-        n.outlinks.push(resolved);
-        pushMap(backlinks, resolved, n.path);
+    if (commonmark) {
+      // CommonMark links; a link title becomes a typed edge (relation kind).
+      for (const { target, relation } of parseCommonMarkLinks(n.body)) {
+        const resolved = resolveLink(target, maps);
+        if (resolved && resolved !== n.path && !seen.has(resolved)) {
+          seen.add(resolved);
+          n.outlinks.push(resolved);
+          pushMap(backlinks, resolved, n.path);
+          if (relation) n.relations.push({ kind: relation, to: resolved });
+        }
+      }
+    } else {
+      for (const { target } of parseWikilinks(n.body)) {
+        const resolved = resolveLink(target, maps);
+        if (resolved && resolved !== n.path && !seen.has(resolved)) {
+          seen.add(resolved);
+          n.outlinks.push(resolved);
+          pushMap(backlinks, resolved, n.path);
+        }
       }
     }
     for (const [field, rel] of Object.entries(manifest.relations ?? {})) {
