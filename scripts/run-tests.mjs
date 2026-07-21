@@ -6,13 +6,14 @@
 // Windows. This enumerator works identically on every platform.
 import { readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import process from 'node:process';
 
 const files = readdirSync('test')
   .filter((f) => f.endsWith('.test.ts'))
   .map((f) => `test/${f}`);
 
 if (files.length === 0) {
-  console.error('run-tests: no test/*.test.ts files found');
+  process.stderr.write('run-tests: no test/*.test.ts files found\n');
   process.exit(1);
 }
 
